@@ -1,0 +1,283 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HANDLS\HANDLS_MERGED_DATASETfin",clear
+{txt}
+{com}. 
+. 
+. //STEP 11: KAPLAN MEIER SURVIVAL CURVES BY TERTILES OF EACH EPIGENETIC CLOCK, EPIGENETIC EAA AND TL VARIABLES//
+. 
+. 
+. 
+. capture drop zHorvathAgeEAAtert zHannumAgeEAAtert zDunedinPoAmtert zsestert    
+{txt}
+{com}. 
+. foreach var of varlist zHorvathAgeEAA zHannumAgeEAA zDunedinPoAm zses {c -(}
+{txt}  2{com}.         xtile `var'tert=`var' if sample_final==1,nq(3)
+{txt}  3{com}. 
+. {c )-}
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+. tab1 *tert 
+
+-> tabulation of zHorvathAgeEAA_no_outlierstert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zHorvathAge {c |}
+EAA_no_outl {c |}
+      iers  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        152       33.41       33.41
+{txt}          2 {c |}{res}        152       33.41       66.81
+{txt}          3 {c |}{res}        151       33.19      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        455      100.00
+
+-> tabulation of zHannumAgeEAA_no_outlierstert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zHannumAgeE {c |}
+AA_no_outli {c |}
+       ers  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        152       33.41       33.41
+{txt}          2 {c |}{res}        152       33.41       66.81
+{txt}          3 {c |}{res}        151       33.19      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        455      100.00
+
+-> tabulation of zDunedinPoAm_no_outlierstert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zDunedinPoA {c |}
+m_no_outlie {c |}
+        rs  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        152       33.41       33.41
+{txt}          2 {c |}{res}        152       33.41       66.81
+{txt}          3 {c |}{res}        151       33.19      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        455      100.00
+
+-> tabulation of zsestert  
+
+{txt}3 quantiles {c |}
+   of zses  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        182       40.00       40.00
+{txt}          2 {c |}{res}        175       38.46       78.46
+{txt}          3 {c |}{res}         98       21.54      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        455      100.00
+{txt}
+{com}. 
+. 
+. foreach var of varlist *tert frail {c -(}
+{txt}  2{com}.         sts test `var' if sample_final==1
+{txt}  3{com}. {c )-}
+{txt}note: sampling weights detected; using Cox regression-based test.
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+
+{txt}Equality of survivor functions
+Cox regression-based test
+
+{col 13} {c |}  Observed       Expected     Relative
+zHorvathAg~t {c |}    events         events       hazard
+{hline 13}{c +}{hline 38}
+           1 {c |}{res}   2280.49        2008.42       1.1402
+           {txt}2 {c |}{res}   1928.25        2074.12       0.9332
+           {txt}3 {c |}{res}   2227.76        2353.96       0.9502
+{txt}{hline 13}{c +}{hline 38}
+       Total {c |}{res}   6436.50        6436.50       1.0000
+
+                               {txt}Wald chi2(2) =   {res}0.36
+                               {txt}Pr>chi2      = {res}0.8342
+
+{txt}{p 0 6 2 55}Note: Reporting Wald model test from Cox regression on {bf:zHorvathAgeEAA_no_outlierstert}.{p_end}
+note: sampling weights detected; using Cox regression-based test.
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+
+{txt}Equality of survivor functions
+Cox regression-based test
+
+{col 13} {c |}  Observed       Expected     Relative
+zHannumAge~t {c |}    events         events       hazard
+{hline 13}{c +}{hline 38}
+           1 {c |}{res}   1689.67        2141.61       0.8625
+           {txt}2 {c |}{res}   1930.03        2769.47       0.7608
+           {txt}3 {c |}{res}   2816.80        1525.41       2.0218
+{txt}{hline 13}{c +}{hline 38}
+       Total {c |}{res}   6436.50        6436.50       1.0000
+
+                               {txt}Wald chi2(2) =   {res}8.69
+                               {txt}Pr>chi2      = {res}0.0130
+
+{txt}{p 0 6 2 55}Note: Reporting Wald model test from Cox regression on {bf:zHannumAgeEAA_no_outlierstert}.{p_end}
+note: sampling weights detected; using Cox regression-based test.
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+
+{txt}Equality of survivor functions
+Cox regression-based test
+
+{col 13} {c |}  Observed       Expected     Relative
+zDunedinPo~t {c |}    events         events       hazard
+{hline 13}{c +}{hline 38}
+           1 {c |}{res}   1309.16        3019.59       0.5164
+           {txt}2 {c |}{res}   2333.01        1482.01       1.8852
+           {txt}3 {c |}{res}   2794.33        1934.89       1.7260
+{txt}{hline 13}{c +}{hline 38}
+       Total {c |}{res}   6436.50        6436.50       1.0000
+
+                               {txt}Wald chi2(2) =  {res}11.72
+                               {txt}Pr>chi2      = {res}0.0028
+
+{txt}{p 0 6 2 55}Note: Reporting Wald model test from Cox regression on {bf:zDunedinPoAm_no_outlierstert}.{p_end}
+note: sampling weights detected; using Cox regression-based test.
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+
+{txt}Equality of survivor functions
+Cox regression-based test
+
+{col 9} {c |}  Observed       Expected     Relative
+zsestert {c |}    events         events       hazard
+{hline 9}{c +}{hline 38}
+       1 {c |}{res}   2850.72        1110.51       3.1831
+       {txt}2 {c |}{res}   2700.03        3179.60       1.0512
+       {txt}3 {c |}{res}    885.75        2146.38       0.5102
+{txt}{hline 9}{c +}{hline 38}
+   Total {c |}{res}   6436.50        6436.50       1.0000
+
+                           {txt}Wald chi2(2) =  {res}27.69
+                           {txt}Pr>chi2      = {res}0.0000
+
+{txt}{p 0 6 2 51}Note: Reporting Wald model test from Cox regression on {bf:zsestert}.{p_end}
+note: sampling weights detected; using Cox regression-based test.
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+
+{txt}Equality of survivor functions
+Cox regression-based test
+
+{col 6} {c |}  Observed       Expected     Relative
+frail {c |}    events         events       hazard
+{hline 6}{c +}{hline 38}
+   No {c |}{res}   5596.30        6014.07       0.9513
+  {txt}Yes {c |}{res}    840.20         422.43       2.0353
+{txt}{hline 6}{c +}{hline 38}
+Total {c |}{res}   6436.50        6436.50       1.0000
+
+                        {txt}Wald chi2(1) =   {res}4.25
+                        {txt}Pr>chi2      = {res}0.0393
+
+{txt}{p 0 6 2 48}Note: Reporting Wald model test from Cox regression on {bf:frail}.{p_end}
+
+{com}. 
+. 
+. foreach var of varlist *tert frail {c -(}
+{txt}  2{com}.         sts graph if sample_final==1, by(`var')
+{txt}  3{com}.         
+. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1`var'.gph",replace
+{txt}  4{com}. {c )-} 
+
+{col 9}{txt}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+{txt}{p 0 4 2}
+(file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHorvathAgeEAA_no_outlierstert.gph{rm}
+not found)
+{p_end}
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHorvathAgeEAA_no_outlierstert.gph} saved
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+{txt}{p 0 4 2}
+(file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHannumAgeEAA_no_outlierstert.gph{rm}
+not found)
+{p_end}
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHannumAgeEAA_no_outlierstert.gph} saved
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+{txt}{p 0 4 2}
+(file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zDunedinPoAm_no_outlierstert.gph{rm}
+not found)
+{p_end}
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zDunedinPoAm_no_outlierstert.gph} saved
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zsestert.gph} saved
+
+{col 9}Failure {bf:_d}: {res}DIED==1
+{col 3}{txt}Analysis time {bf:_t}: {res}TIMEyears
+{col 8}{txt}ID variable: {res}HNDID
+{col 13}{txt}Weight: {res}[pweight=exam_base_wt]
+{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1frail.gph} saved
+
+{com}. 
+. graph combine "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHorvathAgeEAAtert.gph" ///
+> "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zDunedinPoAmtert.gph" ////
+> "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zHannumAgeEAAtert.gph"  ///
+> "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1zsestert.gph" ///
+> "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1frail.gph" ///
+> 
+{res}{txt}
+{com}. graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1combined.gph",replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HANDLS_FIGURE1_KM\FIGURE1combined.gph} saved
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HANDLS\HANDLS_MERGED_DATASETfin",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HANDLS\HANDLS_MERGED_DATASETfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HANDLS\HANDLS_MERGED_DATASETfin",clear
+{txt}
+{com}. 
+. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

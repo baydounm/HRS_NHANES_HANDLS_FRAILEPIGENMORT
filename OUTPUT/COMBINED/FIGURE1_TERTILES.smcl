@@ -1,0 +1,1135 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. use  "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\COMBINED\NHANES_HRS_DATACOMBINEDfin", clear
+{txt}
+{com}. 
+. 
+. su HorvathAgeEAA_no_outliers HannumAgeEAA_no_outliers PhenoAgeEAA_no_outliers GrimAgeMortEAA_no_outliers DunedinPoAm_no_outliers zses 
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+HorvathAge~s {c |}{res}      6,540    .0301087    6.012788  -36.13281    48.4156
+{txt}HannumAgeE~s {c |}{res}      6,541    .0330709    5.296265  -30.57519   44.90864
+{txt}PhenoAgeEA~s {c |}{res}      6,542    .0294534    6.783013  -33.12163    42.0428
+{txt}GrimAgeMor~s {c |}{res}      6,550    1.73e-10    4.780975  -16.94942   22.42842
+{txt}DunedinPoA~s {c |}{res}      6,550    1.089044    .0939694     .73917    1.50903
+{txt}{hline 13}{c +}{hline 57}
+{space 8}zses {c |}{res}      3,003    5.30e-09    .9998334  -1.877589    3.38874
+{txt}
+{com}. tab1 zHorvathAgeEAAtert zHannumAgeEAAtert zPhenoAgeEAAtert zGrimAgeMortEAAtert zDunedinPoAmtert zsestert 
+
+{res}-> tabulation of zHorvathAgeEAAtert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zHorvathAge {c |}
+       EAA  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        489       33.36       33.36
+{txt}          2 {c |}{res}        489       33.36       66.71
+{txt}          3 {c |}{res}        488       33.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+
+-> tabulation of zHannumAgeEAAtert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zHannumAgeE {c |}
+        AA  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        489       33.36       33.36
+{txt}          2 {c |}{res}        489       33.36       66.71
+{txt}          3 {c |}{res}        488       33.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+
+-> tabulation of zPhenoAgeEAAtert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zPhenoAgeEA {c |}
+         A  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        489       33.36       33.36
+{txt}          2 {c |}{res}        489       33.36       66.71
+{txt}          3 {c |}{res}        488       33.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+
+-> tabulation of zGrimAgeMortEAAtert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zGrimAgeMor {c |}
+      tEAA  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        489       33.36       33.36
+{txt}          2 {c |}{res}        489       33.36       66.71
+{txt}          3 {c |}{res}        488       33.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+
+-> tabulation of zDunedinPoAmtert  
+
+{txt}3 quantiles {c |}
+         of {c |}
+zDunedinPoA {c |}
+         m  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        490       33.42       33.42
+{txt}          2 {c |}{res}        488       33.29       66.71
+{txt}          3 {c |}{res}        488       33.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+
+-> tabulation of zsestert  
+
+{txt}3 quantiles {c |}
+   of zses  {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        497       33.90       33.90
+{txt}          2 {c |}{res}        568       38.74       72.65
+{txt}          3 {c |}{res}        401       27.35      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+{txt}
+{com}. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zHorvathAgeEAAtert: su HorvathAgeEAA_no_outliers if COHORT==`x',det      
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = 1
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = 2
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = 3
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = .
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-12.50755      -25.88488
+{txt} 5%    {res}-7.529126      -25.07833
+{txt}10%    {res}-5.890235      -23.82577       {txt}Obs         {res}      2,522
+{txt}25%    {res}-3.061941      -23.18728       {txt}Sum of wgt. {res}      2,522
+
+{txt}50%    {res}-.1132762                      {txt}Mean          {res} .0780772
+                        {txt}Largest       Std. dev.     {res} 5.234022
+{txt}75%    {res} 3.004726       22.63921
+{txt}90%    {res} 6.336648       24.50765       {txt}Variance      {res} 27.39499
+{txt}95%    {res} 8.646508       25.13367       {txt}Skewness      {res} .1793623
+{txt}99%    {res}  14.8592       25.65377       {txt}Kurtosis      {res} 5.533176
+
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = 1
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} -23.7413      -31.31972
+{txt} 5%    {res} -16.6813      -25.88285
+{txt}10%    {res} -13.0455      -25.39924       {txt}Obs         {res}        489
+{txt}25%    {res}-8.073748      -25.01825       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res} -4.88065                      {txt}Mean          {res}-6.489131
+                        {txt}Largest       Std. dev.     {res} 4.655632
+{txt}75%    {res}-3.296385      -2.043018
+{txt}90%    {res}-2.462367      -2.031497       {txt}Variance      {res} 21.67491
+{txt}95%    {res}-2.209559      -2.008954       {txt}Skewness      {res}-1.852301
+{txt}99%    {res}-2.046896       -1.99313       {txt}Kurtosis      {res} 6.919533
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = 2
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-1.965057      -1.985802
+{txt} 5%    {res}-1.741587      -1.985592
+{txt}10%    {res}-1.543708      -1.982189       {txt}Obs         {res}        489
+{txt}25%    {res}-.8214506      -1.977627       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res} .2725619                      {txt}Mean          {res}  .234679
+                        {txt}Largest       Std. dev.     {res} 1.265071
+{txt}75%    {res} 1.348402       2.488478
+{txt}90%    {res} 1.999715       2.494847       {txt}Variance      {res} 1.600404
+{txt}95%    {res} 2.256185       2.515515       {txt}Skewness      {res} .0209155
+{txt}99%    {res} 2.471042       2.524101       {txt}Kurtosis      {res} 1.857311
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = 3
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 2.611609       2.533937
+{txt} 5%    {res} 2.781168       2.546983
+{txt}10%    {res} 3.045299       2.556668       {txt}Obs         {res}        488
+{txt}25%    {res} 3.904101       2.572304       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 5.449127                      {txt}Mean          {res} 6.389261
+                        {txt}Largest       Std. dev.     {res} 4.060814
+{txt}75%    {res} 7.703888       22.70279
+{txt}90%    {res} 10.38084       23.22907       {txt}Variance      {res} 16.49021
+{txt}95%    {res} 13.00326       36.48211       {txt}Skewness      {res} 4.066344
+{txt}99%    {res} 21.73971        48.4156       {txt}Kurtosis      {res} 33.25359
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = .
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-19.30669      -36.13281
+{txt} 5%    {res}-10.74523      -33.84596
+{txt}10%    {res}-7.147757      -33.15379       {txt}Obs         {res}      2,552
+{txt}25%    {res}-3.348405      -31.76193       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res} .2912695                      {txt}Mean          {res}-.0233278
+                        {txt}Largest       Std. dev.     {res} 6.488726
+{txt}75%    {res} 3.661327       25.81905
+{txt}90%    {res} 7.052654       30.01617       {txt}Variance      {res} 42.10356
+{txt}95%    {res} 9.404454       30.47139       {txt}Skewness      {res}-.4776836
+{txt}99%    {res}  15.4439       33.13198       {txt}Kurtosis      {res} 6.312747
+
+
+{txt}{hline}
+-> zHorvathAgeEAAtert = 1
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = 2
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = 3
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHorvathAgeEAAtert = .
+
+                  HorvathAgeEAA_no_outliers
+{hline 61}
+no observations
+
+
+{com}.  
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zHannumAgeEAAtert: su HannumAgeEAA_no_outliers if COHORT==`x',det        
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zHannumAgeEAAtert = 1
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = 2
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = 3
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = .
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-14.42634      -24.92977
+{txt} 5%    {res}-8.022333      -24.78438
+{txt}10%    {res}-5.908069      -22.79278       {txt}Obs         {res}      2,523
+{txt}25%    {res}-3.037956      -22.21276       {txt}Sum of wgt. {res}      2,523
+
+{txt}50%    {res} .0771374                      {txt}Mean          {res}  .085738
+                        {txt}Largest       Std. dev.     {res}  5.37647
+{txt}75%    {res} 3.140896       23.77841
+{txt}90%    {res} 6.138947       26.18617       {txt}Variance      {res} 28.90642
+{txt}95%    {res} 8.550545       26.31011       {txt}Skewness      {res} .0662418
+{txt}99%    {res} 14.41005       27.30469       {txt}Kurtosis      {res} 5.633402
+
+
+{txt}{hline}
+-> zHannumAgeEAAtert = 1
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-14.93296      -25.60487
+{txt} 5%    {res}-11.35201      -18.95686
+{txt}10%    {res}-9.016495      -17.61787       {txt}Obs         {res}        489
+{txt}25%    {res}-6.738795      -16.71366       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-4.627949                      {txt}Mean          {res}-5.412066
+                        {txt}Largest       Std. dev.     {res} 2.897135
+{txt}75%    {res}-3.466363      -2.130043
+{txt}90%    {res}-2.571003      -2.129519       {txt}Variance      {res} 8.393391
+{txt}95%    {res}-2.405274      -2.122213       {txt}Skewness      {res} -1.93438
+{txt}99%    {res}-2.131737      -2.110749       {txt}Kurtosis      {res} 9.475297
+
+{txt}{hline}
+-> zHannumAgeEAAtert = 2
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-2.080063      -2.102024
+{txt} 5%    {res}-1.920514      -2.094577
+{txt}10%    {res}-1.714952      -2.092525       {txt}Obs         {res}        489
+{txt}25%    {res}-1.058673      -2.090444       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-.0541567                      {txt}Mean          {res}-.1164895
+                        {txt}Largest       Std. dev.     {res} 1.127119
+{txt}75%    {res} .8390145       1.813727
+{txt}90%    {res} 1.401204       1.818755       {txt}Variance      {res} 1.270397
+{txt}95%    {res} 1.665908       1.820032       {txt}Skewness      {res}-.0632749
+{txt}99%    {res} 1.812253       1.821004       {txt}Kurtosis      {res}  1.84512
+
+{txt}{hline}
+-> zHannumAgeEAAtert = 3
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 1.859583        1.82727
+{txt} 5%    {res} 2.060338       1.834034
+{txt}10%    {res} 2.311262       1.836421       {txt}Obs         {res}        488
+{txt}25%    {res} 3.216925       1.856824       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 4.810015                      {txt}Mean          {res} 5.646232
+                        {txt}Largest       Std. dev.     {res} 3.625583
+{txt}75%    {res} 7.003875       20.15607
+{txt}90%    {res} 9.672724       22.19571       {txt}Variance      {res} 13.14485
+{txt}95%    {res} 12.59457       22.77757       {txt}Skewness      {res} 2.417794
+{txt}99%    {res} 18.58407       34.66086       {txt}Kurtosis      {res} 13.63258
+
+{txt}{hline}
+-> zHannumAgeEAAtert = .
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-11.84625      -30.57519
+{txt} 5%    {res} -8.11536      -20.47013
+{txt}10%    {res}-6.214785       -17.0974       {txt}Obs         {res}      2,552
+{txt}25%    {res}-3.300091      -16.49988       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res}-.1135153                      {txt}Mean          {res} -.020336
+                        {txt}Largest       Std. dev.     {res} 5.220754
+{txt}75%    {res} 2.944755       29.88418
+{txt}90%    {res}  6.09396       33.81808       {txt}Variance      {res} 27.25627
+{txt}95%    {res} 8.257765       39.87057       {txt}Skewness      {res} .6547063
+{txt}99%    {res}  13.2901       44.90864       {txt}Kurtosis      {res} 8.189319
+
+
+{txt}{hline}
+-> zHannumAgeEAAtert = 1
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = 2
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = 3
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zHannumAgeEAAtert = .
+
+                  HannumAgeEAA_no_outliers
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zDunedinPoAmtert: su DunedinPoAm_no_outliers if COHORT==`x',det  
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .9293807       .8273401
+{txt} 5%    {res} .9783209       .8815326
+{txt}10%    {res} 1.002084       .8834893       {txt}Obs         {res}      2,532
+{txt}25%    {res} 1.045662       .8869458       {txt}Sum of wgt. {res}      2,532
+
+{txt}50%    {res} 1.100171                      {txt}Mean          {res} 1.111087
+                        {txt}Largest       Std. dev.     {res} .0934325
+{txt}75%    {res} 1.165369        1.46342
+{txt}90%    {res} 1.235634       1.463687       {txt}Variance      {res} .0087296
+{txt}95%    {res} 1.282387       1.502843       {txt}Skewness      {res} .6061966
+{txt}99%    {res} 1.364616        1.50903       {txt}Kurtosis      {res} 3.502449
+
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}   .84091         .73917
+{txt} 5%    {res}   .89297         .77084
+{txt}10%    {res}  .920775         .81933       {txt}Obs         {res}        490
+{txt}25%    {res}   .95723         .83466       {txt}Sum of wgt. {res}        490
+
+{txt}50%    {res}  .986295                      {txt}Mean          {res} .9763376
+                        {txt}Largest       Std. dev.     {res} .0427193
+{txt}75%    {res}  1.00804         1.0285
+{txt}90%    {res} 1.020105        1.02857       {txt}Variance      {res} .0018249
+{txt}95%    {res}   1.0247        1.02899       {txt}Skewness      {res}-1.481075
+{txt}99%    {res}  1.02843        1.02899       {txt}Kurtosis      {res} 6.277817
+
+{txt}{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  1.02967        1.02902
+{txt} 5%    {res}  1.03179        1.02912
+{txt}10%    {res}  1.03541        1.02927       {txt}Obs         {res}        488
+{txt}25%    {res}  1.04714        1.02939       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res}  1.06463                      {txt}Mean          {res} 1.065505
+                        {txt}Largest       Std. dev.     {res} .0214946
+{txt}75%    {res}  1.08506        1.10175
+{txt}90%    {res}  1.09518        1.10205       {txt}Variance      {res}  .000462
+{txt}95%    {res}  1.09849        1.10213       {txt}Skewness      {res}-.0005886
+{txt}99%    {res}  1.10162        1.10221       {txt}Kurtosis      {res} 1.801792
+
+{txt}{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  1.10322        1.10225
+{txt} 5%    {res}  1.10813        1.10265
+{txt}10%    {res}  1.11213        1.10273       {txt}Obs         {res}        488
+{txt}25%    {res}  1.12891         1.1031       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 1.159655                      {txt}Mean          {res} 1.174576
+                        {txt}Largest       Std. dev.     {res} .0599445
+{txt}75%    {res}  1.20765          1.378
+{txt}90%    {res}   1.2556        1.38696       {txt}Variance      {res} .0035933
+{txt}95%    {res}  1.29026        1.42182       {txt}Skewness      {res} 1.284153
+{txt}99%    {res}   1.3757         1.4375       {txt}Kurtosis      {res} 4.769813
+
+{txt}{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}   .87645         .74936
+{txt} 5%    {res}   .93855         .75427
+{txt}10%    {res}   .96698         .78807       {txt}Obs         {res}      2,552
+{txt}25%    {res}  1.01571         .78868       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res}  1.07071                      {txt}Mean          {res}  1.07696
+                        {txt}Largest       Std. dev.     {res} .0911606
+{txt}75%    {res}   1.1314        1.38443
+{txt}90%    {res}  1.19814        1.42887       {txt}Variance      {res} .0083103
+{txt}95%    {res}  1.23881        1.44397       {txt}Skewness      {res} .3062276
+{txt}99%    {res}  1.31311        1.46429       {txt}Kurtosis      {res} 3.436232
+
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zPhenoAgeEAAtert: su PhenoAgeEAA_no_outliers if COHORT==`x',det  
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = 1
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = 2
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = 3
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = .
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-16.45659      -33.12163
+{txt} 5%    {res}-10.25045      -28.80579
+{txt}10%    {res}-7.827525      -27.91097       {txt}Obs         {res}      2,524
+{txt}25%    {res}-4.102088      -26.50132       {txt}Sum of wgt. {res}      2,524
+
+{txt}50%    {res} .0687313                      {txt}Mean          {res} .0763407
+                        {txt}Largest       Std. dev.     {res} 6.695222
+{txt}75%    {res}  3.97148       25.95575
+{txt}90%    {res} 8.391681       29.03682       {txt}Variance      {res}   44.826
+{txt}95%    {res} 11.07664       30.98822       {txt}Skewness      {res} .0476839
+{txt}99%    {res} 16.78094       31.98631       {txt}Kurtosis      {res} 4.411756
+
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = 1
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-19.27341      -28.07887
+{txt} 5%    {res}-13.85634      -24.80898
+{txt}10%    {res}-12.34534      -21.59176       {txt}Obs         {res}        489
+{txt}25%    {res} -8.99421      -19.57873       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-6.189114                      {txt}Mean          {res}-7.175645
+                        {txt}Largest       Std. dev.     {res} 3.642119
+{txt}75%    {res}-4.518629      -2.922727
+{txt}90%    {res}-3.502376      -2.921935       {txt}Variance      {res} 13.26503
+{txt}95%    {res}-3.135108      -2.921299       {txt}Skewness      {res}-1.549029
+{txt}99%    {res}-2.941158      -2.917434       {txt}Kurtosis      {res} 6.617671
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = 2
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-2.823897      -2.894363
+{txt} 5%    {res}-2.672272      -2.889859
+{txt}10%    {res}-2.358719      -2.882269       {txt}Obs         {res}        489
+{txt}25%    {res}-1.631563      -2.880992       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-.2945288                      {txt}Mean          {res}-.2745886
+                        {txt}Largest       Std. dev.     {res} 1.527448
+{txt}75%    {res} 1.083679       2.375493
+{txt}90%    {res} 1.838854        2.39428       {txt}Variance      {res} 2.333097
+{txt}95%    {res} 2.056514       2.400996       {txt}Skewness      {res} .0104679
+{txt}99%    {res} 2.370474       2.402634       {txt}Kurtosis      {res} 1.780621
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = 3
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 2.457573       2.406693
+{txt} 5%    {res} 2.754097       2.425786
+{txt}10%    {res} 3.089355       2.425896       {txt}Obs         {res}        488
+{txt}25%    {res} 3.971168       2.426925       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 5.646482                      {txt}Mean          {res} 7.117902
+                        {txt}Largest       Std. dev.     {res}  4.45494
+{txt}75%    {res} 8.936543       23.96087
+{txt}90%    {res} 13.02695        27.5532       {txt}Variance      {res} 19.84649
+{txt}95%    {res} 15.74805         29.585       {txt}Skewness      {res} 1.843098
+{txt}99%    {res} 22.39432       30.78646       {txt}Kurtosis      {res} 7.462902
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = .
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-14.29297      -24.59945
+{txt} 5%    {res}-10.16433      -23.76329
+{txt}10%    {res}-7.984515      -22.73891       {txt}Obs         {res}      2,552
+{txt}25%    {res}  -4.3741      -21.90397       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res}-.4547244                      {txt}Mean          {res} .0664687
+                        {txt}Largest       Std. dev.     {res} 6.876109
+{txt}75%    {res} 3.915748       28.51403
+{txt}90%    {res} 8.490279       29.41908       {txt}Variance      {res} 47.28087
+{txt}95%    {res} 11.77475       35.89226       {txt}Skewness      {res} .6276742
+{txt}99%    {res}  20.8463        42.0428       {txt}Kurtosis      {res} 4.781048
+
+
+{txt}{hline}
+-> zPhenoAgeEAAtert = 1
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = 2
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = 3
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zPhenoAgeEAAtert = .
+
+                   PhenoAgeEAA_no_outliers
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zGrimAgeMortEAAtert: su GrimAgeMortEAA_no_outliers if COHORT==`x',det    
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = 1
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = 2
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = 3
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = .
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-8.645201      -14.56147
+{txt} 5%    {res}-6.608165      -12.35008
+{txt}10%    {res}-5.501549      -11.53199       {txt}Obs         {res}      2,532
+{txt}25%    {res}-3.451409      -11.20291       {txt}Sum of wgt. {res}      2,532
+
+{txt}50%    {res}-.8291771                      {txt}Mean          {res}-7.67e-10
+                        {txt}Largest       Std. dev.     {res} 4.837239
+{txt}75%    {res}  2.84415       17.10765
+{txt}90%    {res} 6.844784       17.19636       {txt}Variance      {res} 23.39888
+{txt}95%    {res} 9.015753       17.71153       {txt}Skewness      {res} .7328345
+{txt}99%    {res} 13.53618       21.61928       {txt}Kurtosis      {res} 3.491381
+
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = 1
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-9.555637      -13.68586
+{txt} 5%    {res}-8.252034      -10.37294
+{txt}10%    {res}-7.345069      -10.33466       {txt}Obs         {res}        489
+{txt}25%    {res} -5.84288      -10.25882       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-4.498655                      {txt}Mean          {res}-4.858027
+                        {txt}Largest       Std. dev.     {res} 1.736389
+{txt}75%    {res} -3.54582      -2.575548
+{txt}90%    {res}-2.880447      -2.573068       {txt}Variance      {res} 3.015048
+{txt}95%    {res}-2.715362      -2.556656       {txt}Skewness      {res}-1.019243
+{txt}99%    {res}-2.585119      -2.556533       {txt}Kurtosis      {res} 4.150209
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = 2
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-2.511728      -2.538651
+{txt} 5%    {res}-2.328473      -2.528924
+{txt}10%    {res}-2.184282      -2.522101       {txt}Obs         {res}        489
+{txt}25%    {res}-1.621851      -2.512365       {txt}Sum of wgt. {res}        489
+
+{txt}50%    {res}-.8554364                      {txt}Mean          {res}-.7170079
+                        {txt}Largest       Std. dev.     {res} 1.092535
+{txt}75%    {res} .1742866       1.304389
+{txt}90%    {res} .8739893        1.31082       {txt}Variance      {res} 1.193632
+{txt}95%    {res} 1.038916       1.311263       {txt}Skewness      {res} .1695604
+{txt}99%    {res} 1.281339       1.327441       {txt}Kurtosis      {res} 1.860954
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = 3
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} 1.362495       1.346891
+{txt} 5%    {res} 1.491719        1.35252
+{txt}10%    {res}  1.72272       1.360417       {txt}Obs         {res}        488
+{txt}25%    {res} 2.749215       1.362314       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 4.562777                      {txt}Mean          {res} 5.326677
+                        {txt}Largest       Std. dev.     {res} 3.266575
+{txt}75%    {res} 7.225928       15.58355
+{txt}90%    {res} 9.802226       15.61391       {txt}Variance      {res} 10.67051
+{txt}95%    {res} 11.58381       17.30585       {txt}Skewness      {res} 1.112265
+{txt}99%    {res} 15.27561       20.29718       {txt}Kurtosis      {res} 4.217109
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = .
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-8.680397      -16.94942
+{txt} 5%    {res}-6.720384      -12.11913
+{txt}10%    {res}-5.473634      -12.10567       {txt}Obs         {res}      2,552
+{txt}25%    {res}-3.236956       -11.1516       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res}-.7001349                      {txt}Mean          {res} .0496762
+                        {txt}Largest       Std. dev.     {res} 4.750858
+{txt}75%    {res} 2.984104       17.96604
+{txt}90%    {res}  6.73104       18.12518       {txt}Variance      {res} 22.57065
+{txt}95%    {res} 8.726781       19.69568       {txt}Skewness      {res} .6107791
+{txt}99%    {res} 12.72348       22.42842       {txt}Kurtosis      {res} 3.398795
+
+
+{txt}{hline}
+-> zGrimAgeMortEAAtert = 1
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = 2
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = 3
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zGrimAgeMortEAAtert = .
+
+                 GrimAgeMortEAA_no_outliers
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zDunedinPoAmtert: su DunedinPoAm_no_outliers if COHORT==`x',det  
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .9293807       .8273401
+{txt} 5%    {res} .9783209       .8815326
+{txt}10%    {res} 1.002084       .8834893       {txt}Obs         {res}      2,532
+{txt}25%    {res} 1.045662       .8869458       {txt}Sum of wgt. {res}      2,532
+
+{txt}50%    {res} 1.100171                      {txt}Mean          {res} 1.111087
+                        {txt}Largest       Std. dev.     {res} .0934325
+{txt}75%    {res} 1.165369        1.46342
+{txt}90%    {res} 1.235634       1.463687       {txt}Variance      {res} .0087296
+{txt}95%    {res} 1.282387       1.502843       {txt}Skewness      {res} .6061966
+{txt}99%    {res} 1.364616        1.50903       {txt}Kurtosis      {res} 3.502449
+
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}   .84091         .73917
+{txt} 5%    {res}   .89297         .77084
+{txt}10%    {res}  .920775         .81933       {txt}Obs         {res}        490
+{txt}25%    {res}   .95723         .83466       {txt}Sum of wgt. {res}        490
+
+{txt}50%    {res}  .986295                      {txt}Mean          {res} .9763376
+                        {txt}Largest       Std. dev.     {res} .0427193
+{txt}75%    {res}  1.00804         1.0285
+{txt}90%    {res} 1.020105        1.02857       {txt}Variance      {res} .0018249
+{txt}95%    {res}   1.0247        1.02899       {txt}Skewness      {res}-1.481075
+{txt}99%    {res}  1.02843        1.02899       {txt}Kurtosis      {res} 6.277817
+
+{txt}{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  1.02967        1.02902
+{txt} 5%    {res}  1.03179        1.02912
+{txt}10%    {res}  1.03541        1.02927       {txt}Obs         {res}        488
+{txt}25%    {res}  1.04714        1.02939       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res}  1.06463                      {txt}Mean          {res} 1.065505
+                        {txt}Largest       Std. dev.     {res} .0214946
+{txt}75%    {res}  1.08506        1.10175
+{txt}90%    {res}  1.09518        1.10205       {txt}Variance      {res}  .000462
+{txt}95%    {res}  1.09849        1.10213       {txt}Skewness      {res}-.0005886
+{txt}99%    {res}  1.10162        1.10221       {txt}Kurtosis      {res} 1.801792
+
+{txt}{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  1.10322        1.10225
+{txt} 5%    {res}  1.10813        1.10265
+{txt}10%    {res}  1.11213        1.10273       {txt}Obs         {res}        488
+{txt}25%    {res}  1.12891         1.1031       {txt}Sum of wgt. {res}        488
+
+{txt}50%    {res} 1.159655                      {txt}Mean          {res} 1.174576
+                        {txt}Largest       Std. dev.     {res} .0599445
+{txt}75%    {res}  1.20765          1.378
+{txt}90%    {res}   1.2556        1.38696       {txt}Variance      {res} .0035933
+{txt}95%    {res}  1.29026        1.42182       {txt}Skewness      {res} 1.284153
+{txt}99%    {res}   1.3757         1.4375       {txt}Kurtosis      {res} 4.769813
+
+{txt}{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}   .87645         .74936
+{txt} 5%    {res}   .93855         .75427
+{txt}10%    {res}   .96698         .78807       {txt}Obs         {res}      2,552
+{txt}25%    {res}  1.01571         .78868       {txt}Sum of wgt. {res}      2,552
+
+{txt}50%    {res}  1.07071                      {txt}Mean          {res}  1.07696
+                        {txt}Largest       Std. dev.     {res} .0911606
+{txt}75%    {res}   1.1314        1.38443
+{txt}90%    {res}  1.19814        1.42887       {txt}Variance      {res} .0083103
+{txt}95%    {res}  1.23881        1.44397       {txt}Skewness      {res} .3062276
+{txt}99%    {res}  1.31311        1.46429       {txt}Kurtosis      {res} 3.436232
+
+
+{txt}{hline}
+-> zDunedinPoAmtert = 1
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 2
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = 3
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+{hline}
+-> zDunedinPoAmtert = .
+
+                   DunedinPoAm_no_outliers
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. forval x=1(1)3{c -(}
+{txt}  2{com}. bysort zsestert: su zses if COHORT==`x',det     
+{txt}  3{com}. {c )-}
+
+{txt}{hline}
+-> zsestert = 1
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = 2
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = 3
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = .
+
+                 Standardized values of ses
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-1.448256      -1.592291
+{txt} 5%    {res}  -1.3253      -1.592291
+{txt}10%    {res}-1.237474      -1.592291       {txt}Obs         {res}      1,537
+{txt}25%    {res}-.8834462      -1.592291       {txt}Sum of wgt. {res}      1,537
+
+{txt}50%    {res}-.0832629                      {txt}Mean          {res}-3.88e-10
+                        {txt}Largest       Std. dev.     {res}        1
+{txt}75%    {res} .7739183       1.833277
+{txt}90%    {res} 1.416015       1.833277       {txt}Variance      {res}        1
+{txt}95%    {res} 1.833277       1.833277       {txt}Skewness      {res} .3479067
+{txt}99%    {res} 1.833277       2.307894       {txt}Kurtosis      {res} 1.946036
+
+
+{txt}{hline}
+-> zsestert = 1
+
+                 Standardized values of ses
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-1.877589      -1.877589
+{txt} 5%    {res}-1.877589      -1.877589
+{txt}10%    {res}-1.877589      -1.877589       {txt}Obs         {res}        497
+{txt}25%    {res}-1.877589      -1.877589       {txt}Sum of wgt. {res}        497
+
+{txt}50%    {res}-.9452946                      {txt}Mean          {res}-1.104974
+                        {txt}Largest       Std. dev.     {res} .5068338
+{txt}75%    {res}-.5610064      -.4791476
+{txt}90%    {res}-.4791476      -.4791476       {txt}Variance      {res} .2568806
+{txt}95%    {res}-.4791476      -.4791476       {txt}Skewness      {res}-.4717673
+{txt}99%    {res}-.4791476      -.4791476       {txt}Kurtosis      {res} 1.899654
+
+{txt}{hline}
+-> zsestert = 2
+
+                 Standardized values of ses
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}-.0948595      -.1767184
+{txt} 5%    {res}-.0948595      -.1767184
+{txt}10%    {res}-.0948595      -.1767184       {txt}Obs         {res}        568
+{txt}25%    {res}-.0948595      -.0948595       {txt}Sum of wgt. {res}        568
+
+{txt}50%    {res}-.0130006                      {txt}Mean          {res} .1203792
+                        {txt}Largest       Std. dev.     {res} .2286591
+{txt}75%    {res} .3712875       .3712875
+{txt}90%    {res} .3712875       .3712875       {txt}Variance      {res}  .052285
+{txt}95%    {res} .3712875       .3712875       {txt}Skewness      {res} .1703417
+{txt}99%    {res} .3712875       .3712875       {txt}Kurtosis      {res} 1.055174
+
+{txt}{hline}
+-> zsestert = 3
+
+                 Standardized values of ses
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res} .7555757       .6737167
+{txt} 5%    {res} .7555757       .7555757
+{txt}10%    {res} .8374345       .7555757       {txt}Obs         {res}        401
+{txt}25%    {res} .8374345       .7555757       {txt}Sum of wgt. {res}        401
+
+{txt}50%    {res} .8374345                      {txt}Mean          {res} 1.198995
+                        {txt}Largest       Std. dev.     {res} .5394827
+{txt}75%    {res}  1.68787       2.922593
+{txt}90%    {res}  1.68787        3.38874       {txt}Variance      {res} .2910416
+{txt}95%    {res} 2.538305        3.38874       {txt}Skewness      {res}  1.55715
+{txt}99%    {res} 2.922593        3.38874       {txt}Kurtosis      {res} 5.168843
+
+{txt}{hline}
+-> zsestert = .
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+
+{hline}
+-> zsestert = 1
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = 2
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = 3
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+{hline}
+-> zsestert = .
+
+                 Standardized values of ses
+{hline 61}
+no observations
+
+
+{com}. 
+. 
+. save  "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\COMBINED\NHANES_HRS_DATACOMBINEDfin", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\COMBINED\NHANES_HRS_DATACOMBINEDfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

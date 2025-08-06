@@ -1,0 +1,92 @@
+# Load libraries
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(ggnewscale)
+
+# Define file path
+file_path <- "E:/16GBBACKUPUSB/BACKUP_USB_SEPTEMBER2014/SUMMER_STUDENT_2025/HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT/MANUSCRIPT/Supplementary_datasheet3.xlsx"
+
+# Load NHANES and HRS sheets
+nhanes_raw <- read_excel(file_path, sheet = "NHANES")
+hrs_raw <- read_excel(file_path, sheet = "HRS")
+
+# Function to prepare data
+prepare_data <- function(df, cohort_label) {
+  df %>%
+    select(EPICLOCK, Parameter, Coefficient, `P>z`) %>%
+    rename(Value = Coefficient, P = `P>z`) %>%
+    mutate(
+      Signif = ifelse(!is.na(P) & P < 0.05, "*", ""),
+      Label = paste0(round(Value, 3), Signif),
+      Cohort = cohort_label,
+      Group = ifelse(grepl("^(p_|op_)", Parameter), "p", "main")
+    )
+}
+
+# Prepare datasets
+nhanes_long <- prepare_data(nhanes_raw, "NHANES")
+hrs_long <- prepare_data(hrs_raw, "HRS")
+
+# Combine and exclude 'terira'
+combined_data <- bind_rows(nhanes_long, hrs_long) %>%
+  filter(Parameter != "terira")
+
+# Split data by group
+main_data <- combined_data %>% filter(Group == "main")
+p_data <- combined_data %>% filter(Group == "p")
+
+# Plot
+ggplot() +
+  # Main effects heatmap (blue-white-red)
+  geom_tile(data = main_data, aes(x = Parameter, y = EPICLOCK, fill = Value), color = "white") +
+  scale_fill_gradient2(
+    low = "blue",
+    mid = "white",
+    high = "red",
+    midpoint = 0,
+    limits = c(-1.5, 1.5),
+    breaks = seq(-1.5, 1.5, by = 0.5),
+    name = "Main Effects"
+  ) +
+  geom_text(
+    data = main_data,
+    aes(x = Parameter, y = EPICLOCK, label = Label),
+    angle = 90,
+    size = 3.5,
+    color = "black"
+  ) +
+  
+  # New fill scale for p_ and op_ parameters
+  ggnewscale::new_scale_fill() +
+  
+  geom_tile(data = p_data, aes(x = Parameter, y = EPICLOCK, fill = Value), color = "white") +
+  scale_fill_gradientn(
+    colors = c("#1b7837", "#FFFFFF", "#9370DB"),  # green - white - purple
+    values = scales::rescale(c(-1.1, 0, 1.1)),
+    limits = c(-1.1, 1.1),
+    breaks = seq(-1.1, 1.1, by = 0.5),
+    name = "p_ / op_ Effects"
+  ) +
+  geom_text(
+    data = p_data,
+    aes(x = Parameter, y = EPICLOCK, label = Label),
+    angle = 90,
+    size = 3.5,
+    color = "black"
+  ) +
+  
+  facet_wrap(~Cohort) +
+  theme_minimal(base_size = 14) +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+    strip.text = element_text(face = "bold", size = 14),
+    plot.title = element_text(face = "bold", size = 16, hjust = 0.5),
+    legend.position = "right"
+  ) +
+  labs(
+    title = "Four-Way Decomposition Heatmap by Cohort",
+    x = "Decomposition Parameter",
+    y = "Epigenetic Clock (EPICLOCK)"
+  )

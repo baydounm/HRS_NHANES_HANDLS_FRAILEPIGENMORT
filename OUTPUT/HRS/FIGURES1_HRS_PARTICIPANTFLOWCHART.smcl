@@ -1,0 +1,1179 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. ******************************************STEP 8: PARTICIPANT FLOWCHART: May 8th******************************************************************
+. 
+. 
+. **DETERMINE SAMPLE WITH COMPLETE DATA ON TELOMERE LENGTH AND EPIGENETIC CLOCK AND WHERE RESPONDENT'S AGE IS >50 IN 2012 AND ALIVE IN 2016**
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",clear
+{txt}
+{com}. 
+. capture drop sample50plus2016
+{txt}
+{com}. gen sample50plus2016=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample50plus2016=1 if r13agey_e>=50 & r13agey_e~=.
+{txt}(20,148 real changes made)
+
+{com}. replace sample50plus2016=0 if sample50plus2016~=1 & r13agey_e~=.
+{txt}(764 real changes made)
+
+{com}. 
+. tab sample50plus2016
+
+{txt}sample50plu {c |}
+      s2016 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        764        3.65        3.65
+{txt}          1 {c |}{res}     20,148       96.35      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     20,912      100.00
+{txt}
+{com}. 
+. capture drop samplealivein2016
+{txt}
+{com}. gen samplealivein2016=.
+{txt}(46,855 missing values generated)
+
+{com}. replace samplealivein2016=1 if inw13==1
+{txt}(20,912 real changes made)
+
+{com}. replace samplealivein2016=0 if samplealivein2016~=1
+{txt}(25,943 real changes made)
+
+{com}. 
+. tab samplealivein2016
+
+{txt}samplealive {c |}
+     in2016 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     25,943       55.37       55.37
+{txt}          1 {c |}{res}     20,912       44.63      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. 
+. capture drop sampleEPI2016
+{txt}
+{com}. gen sampleEPI2016=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sampleEPI2016=1 if HORVATH_DNAMAGE~=. & HANNUM_DNAMAGE~=. & LEVINE_DNAMAGE~=. & DNAMGRIMAGE~=. & MPOA~=. 
+{txt}(4,018 real changes made)
+
+{com}. replace sampleEPI2016=0 if sampleEPI2016~=1
+{txt}(42,837 real changes made)
+
+{com}. 
+. 
+. **Exclude outliers**
+. local vars HORVATH_DNAMAGE HANNUM_DNAMAGE LEVINE_DNAMAGE DNAMGRIMAGE MPOA
+{txt}
+{com}. 
+. capture drop HORVATH_DNAMAGE_no_outliers
+{txt}
+{com}. capture drop HANNUM_DNAMAGE_no_outliers 
+{txt}
+{com}. capture drop LEVINE_DNAMAGE_no_outliers 
+{txt}
+{com}. capture drop DNAMGRIMAGE_no_outliers 
+{txt}
+{com}. capture drop MPOA_no_outliers 
+{txt}
+{com}. 
+. 
+. foreach var of varlist `vars' {c -(}
+{txt}  2{com}.     // Calculate IQR
+.     quietly summarize `var', detail
+{txt}  3{com}.     local p25 = r(p25)
+{txt}  4{com}.     local p75 = r(p75)
+{txt}  5{com}.     local iqr = `p75' - `p25'
+{txt}  6{com}. 
+.     // Define the upper and lower bounds for outliers
+.     local lower_bound = `p25' - 4 * `iqr'
+{txt}  7{com}.     local upper_bound = `p75' + 4 * `iqr'
+{txt}  8{com}. 
+.     // Generate a new variable excluding outliers
+.     gen `var'_no_outliers = `var'
+{txt}  9{com}.     replace `var'_no_outliers = . if `var' < `lower_bound' | `var' > `upper_bound'
+{txt} 10{com}. {c )-}
+{txt}(42,837 missing values generated)
+(0 real changes made)
+(42,837 missing values generated)
+(0 real changes made)
+(42,837 missing values generated)
+(0 real changes made)
+(42,837 missing values generated)
+(0 real changes made)
+(42,837 missing values generated)
+(0 real changes made)
+
+{com}. 
+. 
+. capture drop sampleEPI2016fin
+{txt}
+{com}. gen sampleEPI2016fin=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sampleEPI2016fin=1 if sampleEPI2016==1 & HORVATH_DNAMAGE_no_outliers~=. & HANNUM_DNAMAGE_no_outliers~=. & LEVINE_DNAMAGE_no_outliers~=. & DNAMGRIMAGE_no_outliers~=. & MPOA_no_outliers~=. 
+{txt}(4,018 real changes made)
+
+{com}. replace sampleEPI2016fin=0 if sampleEPI2016fin~=1
+{txt}(42,837 real changes made)
+
+{com}. 
+. tab sampleEPI2016fin
+
+{txt}sampleEPI20 {c |}
+      16fin {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     42,837       91.42       91.42
+{txt}          1 {c |}{res}      4,018        8.58      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture drop sample2
+{txt}
+{com}. gen sample2=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample2=1 if sample50plus2016==1 & samplealivein2016==1
+{txt}(20,148 real changes made)
+
+{com}. replace sample2=0 if sample2~=1
+{txt}(26,707 real changes made)
+
+{com}. 
+. tab sample2
+
+    {txt}sample2 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     26,707       57.00       57.00
+{txt}          1 {c |}{res}     20,148       43.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. capture drop sample3
+{txt}
+{com}. gen sample3=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample3=1 if sample2==1 & fried_sum~=.
+{txt}(4,661 real changes made)
+
+{com}. replace sample3=0 if sample3~=1
+{txt}(42,194 real changes made)
+
+{com}. 
+. tab sample3
+
+    {txt}sample3 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     42,194       90.05       90.05
+{txt}          1 {c |}{res}      4,661        9.95      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. capture drop sample4
+{txt}
+{com}. gen sample4=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample4=1 if sample3==1 & sampleEPI2016fin==1
+{txt}(1,466 real changes made)
+
+{com}. replace sample4=0 if sample4~=1
+{txt}(45,389 real changes made)
+
+{com}. 
+. tab sample4
+
+    {txt}sample4 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,389       96.87       96.87
+{txt}          1 {c |}{res}      1,466        3.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. capture drop sample5
+{txt}
+{com}. gen sample5=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample5=1 if sample3==1 & sample4==1 & education~=. & totwealth_2016~=.  
+{txt}(1,466 real changes made)
+
+{com}. replace sample5=0 if sample5~=1
+{txt}(45,389 real changes made)
+
+{com}. 
+. tab sample5
+
+    {txt}sample5 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,389       96.87       96.87
+{txt}          1 {c |}{res}      1,466        3.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. 
+. capture drop sample6
+{txt}
+{com}. gen sample6=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample6=1 if sample5==1 & fried_sum~=.
+{txt}(1,466 real changes made)
+
+{com}. replace sample6=0 if sample6~=1
+{txt}(45,389 real changes made)
+
+{com}. 
+. tab sample6
+
+    {txt}sample6 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,389       96.87       96.87
+{txt}          1 {c |}{res}      1,466        3.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. capture drop sample_final
+{txt}
+{com}. gen sample_final=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample_final=1 if sample5==1 
+{txt}(1,466 real changes made)
+
+{com}. replace sample_final=0 if sample_final~=1
+{txt}(45,389 real changes made)
+
+{com}. 
+. tab sample_final
+
+{txt}sample_fina {c |}
+          l {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,389       96.87       96.87
+{txt}          1 {c |}{res}      1,466        3.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. capture drop ses
+{txt}
+{com}. pca education totwealth_2016 if sample_final==1,factors(1)
+
+{txt}Principal components/correlation{col 50}Number of obs    = {res}     1,466
+{col 50}{txt}Number of comp.  = {res}         1
+{col 50}{txt}Trace            {col 67}=  {res}        2
+{col 5}{txt}Rotation: (unrotated = principal){col 50}Rho              = {res}    0.6899
+
+{txt}{col 5}{hline 13}{c TT}{hline 60}
+{col 5}   Component {c |}   Eigenvalue   Difference         Proportion   Cumulative
+{col 5}{hline 13}{c +}{hline 60}
+{col 5}{ralign 12:Comp1} {c |}{res}      1.37989      .759773             0.6899       0.6899
+{txt}{col 5}{ralign 12:Comp2} {c |}{res}      .620114            .             0.3101       1.0000
+{txt}{col 5}{hline 13}{c BT}{hline 60}
+
+Principal components (eigenvectors) 
+
+{space 4}{hline 13}{c  TT}{hline 10}{c  TT}{hline 13}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}{c |}{space 1}{ralign 11:Unexplained}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}{c   +}{hline 13}
+{space 4}{space 0}{ralign 12:education}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .3101}}}{space 1}
+{space 4}{space 0}{ralign 12:totweal~2016}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .3101}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}{c  BT}{hline 13}
+
+{com}. predict ses
+{txt}({bf:score} assumed)
+
+Scoring coefficients 
+{col 5}sum of squares(column-loading) = 1
+
+{space 4}{hline 13}{c  TT}{hline 10}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}
+{space 4}{space 0}{ralign 12:education}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}
+{space 4}{space 0}{ralign 12:totweal~2016}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}
+
+{com}. 
+. su ses if sample_final==1
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}ses {c |}{res}      1,466   -9.39e-09    1.174686  -2.205576   3.980704
+{txt}
+{com}. histogram ses
+{txt}(bin={res}43{txt}, start={res}-2.2055764{txt}, width={res}.14386699{txt})
+{res}{txt}
+{com}. 
+. 
+. **Final sample size for HRS: 1,466**
+. 
+. su r9agey_*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}r9agey_b {c |}{res}     17,217    69.20154    10.76317         25        106
+{txt}{space 4}r9agey_e {c |}{res}     17,217    69.20486    10.76299         25        106
+{txt}{space 4}r9agey_m {c |}{res}     17,217    69.20236    10.76304         25        106
+{txt}
+{com}. su r13agey_*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 3}r13agey_b {c |}{res}     20,912    65.69778    11.79574         21        107
+{txt}{space 3}r13agey_e {c |}{res}     20,912    65.70931    11.79422         21        107
+{txt}{space 3}r13agey_m {c |}{res}     20,912    65.70208    11.79486         21        107
+{txt}
+{com}. 
+. capture drop AGE2008
+{txt}
+{com}. gen AGE2008=r9agey_e
+{txt}(29,638 missing values generated)
+
+{com}. 
+. capture drop AGE2016
+{txt}
+{com}. gen AGE2016=r13agey_e
+{txt}(25,943 missing values generated)
+
+{com}. 
+. su AGE2008 if sample_final==1,det
+
+                           {txt}AGE2008
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       48             42
+{txt} 5%    {res}       53             43
+{txt}10%    {res}       55             44       {txt}Obs         {res}      1,008
+{txt}25%    {res}       59             44       {txt}Sum of wgt. {res}      1,008
+
+{txt}50%    {res}       66                      {txt}Mean          {res} 65.84921
+                        {txt}Largest       Std. dev.     {res} 8.379592
+{txt}75%    {res}       72             87
+{txt}90%    {res}       77             88       {txt}Variance      {res} 70.21756
+{txt}95%    {res}       80             88       {txt}Skewness      {res}  .056457
+{txt}99%    {res}       84             90       {txt}Kurtosis      {res} 2.564756
+{txt}
+{com}. su AGE2016 if sample_final==1,det
+
+                           {txt}AGE2016
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}       53             50
+{txt} 5%    {res}       56             50
+{txt}10%    {res}       58             51       {txt}Obs         {res}      1,466
+{txt}25%    {res}       62             51       {txt}Sum of wgt. {res}      1,466
+
+{txt}50%    {res}       69                      {txt}Mean          {res} 69.90518
+                        {txt}Largest       Std. dev.     {res} 9.670681
+{txt}75%    {res}       77             95
+{txt}90%    {res}       83             96       {txt}Variance      {res} 93.52206
+{txt}95%    {res}       87             97       {txt}Skewness      {res} .3202446
+{txt}99%    {res}       92             98       {txt}Kurtosis      {res} 2.232704
+{txt}
+{com}. 
+. 
+. capture drop AGE
+{txt}
+{com}. gen AGE=AGE2016
+{txt}(25,943 missing values generated)
+
+{com}. 
+. 
+. 
+. 
+. foreach var of varlist HORVATH_DNAMAGE_no_outliers HANNUM_DNAMAGE_no_outliers LEVINE_DNAMAGE_no_outliers DNAMGRIMAGE_no_outliers MPOA_no_outliers {c -(}
+{txt}  2{com}.         histogram `var'
+{txt}  3{com}.         graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HIST`var'.gph",replace
+{txt}  4{com}.         
+. {c )-}
+{txt}(bin={res}36{txt}, start={res}23.307739{txt}, width={res}2.5337223{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTHORVATH_DNAMAGE_no_outliers.gph} saved
+(bin={res}36{txt}, start={res}25.058701{txt}, width={res}2.2982029{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTHANNUM_DNAMAGE_no_outliers.gph} saved
+(bin={res}36{txt}, start={res}26.71921{txt}, width={res}2.0821772{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTLEVINE_DNAMAGE_no_outliers.gph} saved
+(bin={res}36{txt}, start={res}42.673931{txt}, width={res}1.5816783{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTDNAMGRIMAGE_no_outliers.gph} saved
+(bin={res}36{txt}, start={res}.73917001{txt}, width={res}.02014222{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTMPOA_no_outliers.gph} saved
+
+{com}. 
+. 
+. 
+. **STEP 9: MORTALITY VARIABLES FROM 2008 THROUGH 2020: TRACKER FILE INW**
+. 
+. **dead vs. alive: 2016-2022
+. 
+. capture drop died
+{txt}
+{com}. gen died=.
+{txt}(46,855 missing values generated)
+
+{com}. replace died=1 if (sample_final==1 & knowndeceasedyr~=. & knowndeceasedmo~=.)
+{txt}(278 real changes made)
+
+{com}. replace died=0 if died!=1 & sample_final==1
+{txt}(1,188 real changes made)
+
+{com}. 
+. tab died if sample_final==1
+
+       {txt}died {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,188       81.04       81.04
+{txt}          1 {c |}{res}        278       18.96      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,466      100.00
+{txt}
+{com}. 
+. 
+. **Date of death: dod**
+. 
+. su knowndeceasedmo knowndeceasedyr if sample_final==1
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+knowndecea~o {c |}{res}        278    7.464029    8.474029          1         98
+{txt}knowndecea~r {c |}{res}        278    2019.597    1.670381       2016       2023
+{txt}
+{com}. tab1 knowndeceasedmo knowndeceasedyr if sample_final==1
+
+{res}-> tabulation of knowndeceasedmo if sample_final==1 
+
+      {txt}known {c |}
+ deceased - {c |}
+      month {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}         24        8.63        8.63
+{txt}          2 {c |}{res}         21        7.55       16.19
+{txt}          3 {c |}{res}         21        7.55       23.74
+{txt}          4 {c |}{res}         21        7.55       31.29
+{txt}          5 {c |}{res}         17        6.12       37.41
+{txt}          6 {c |}{res}         17        6.12       43.53
+{txt}          7 {c |}{res}         22        7.91       51.44
+{txt}          8 {c |}{res}         22        7.91       59.35
+{txt}          9 {c |}{res}         28       10.07       69.42
+{txt}         10 {c |}{res}         36       12.95       82.37
+{txt}         11 {c |}{res}         27        9.71       92.09
+{txt}         12 {c |}{res}         20        7.19       99.28
+{txt}         98 {c |}{res}          2        0.72      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        278      100.00
+
+-> tabulation of knowndeceasedyr if sample_final==1 
+
+      {txt}known {c |}
+ deceased - {c |}
+       year {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       2016 {c |}{res}          4        1.44        1.44
+{txt}       2017 {c |}{res}         31       11.15       12.59
+{txt}       2018 {c |}{res}         47       16.91       29.50
+{txt}       2019 {c |}{res}         46       16.55       46.04
+{txt}       2020 {c |}{res}         60       21.58       67.63
+{txt}       2021 {c |}{res}         48       17.27       84.89
+{txt}       2022 {c |}{res}         37       13.31       98.20
+{txt}       2023 {c |}{res}          5        1.80      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}        278      100.00
+{txt}
+{com}. 
+. capture drop deathmonth
+{txt}
+{com}. gen deathmonth=knowndeceasedmo if knowndeceasedmo~=98
+{txt}(27,710 missing values generated)
+
+{com}. 
+. capture drop deathyear
+{txt}
+{com}. gen deathyear=knowndeceasedyr
+{txt}(27,571 missing values generated)
+
+{com}. 
+. capture drop deathday
+{txt}
+{com}. gen deathday=14
+{txt}
+{com}. 
+. capture drop dod
+{txt}
+{com}. gen dod=mdy(deathmonth, deathday, deathyear)
+{txt}(27,710 missing values generated)
+
+{com}. 
+. **Date of entry: doenter**
+. capture drop doenter
+{txt}
+{com}. gen doenter=mdy(01,01,2016)
+{txt}
+{com}. 
+. **Date of exit if still alive: doexit**
+. capture drop doexit
+{txt}
+{com}. gen doexit=mdy(12,31,2022) 
+{txt}
+{com}. 
+. **Date of exit for censor or dead**
+. capture drop doevent
+{txt}
+{com}. gen doevent=.
+{txt}(46,855 missing values generated)
+
+{com}. replace doevent=dod if died==1 & sample_final==1
+{txt}(276 real changes made)
+
+{com}. replace doevent=doexit if died==0 & sample_final==1
+{txt}(1,188 real changes made)
+
+{com}. 
+. su doevent
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}doevent {c |}{res}      1,464    22811.85    485.4829      20741      23144
+{txt}
+{com}. 
+. ***Estimated birth date**
+. 
+. capture drop dob
+{txt}
+{com}. gen dob=mdy(birthmo,14,birthyr)
+{txt}(817 missing values generated)
+
+{com}. 
+. 
+. 
+. capture drop ageevent
+{txt}
+{com}. gen ageevent=(doevent-dob)/365.5
+{txt}(45,391 missing values generated)
+
+{com}. 
+. su ageevent
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}ageevent {c |}{res}      1,464    76.16894    9.289572   57.25581   103.6772
+{txt}
+{com}. 
+. capture drop ageenter
+{txt}
+{com}. gen ageenter=AGE2016
+{txt}(25,943 missing values generated)
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. **STEP 10: STSET FOR MORTALITY OUTCOME***
+. capture drop time_event
+{txt}
+{com}. gen time_event=ageevent-AGE2016
+{txt}(45,391 missing values generated)
+
+{com}. 
+. su time_event,det
+
+                         {txt}time_event
+{hline 61}
+      Percentiles      Smallest
+ 1%    {res}  1.44323        .445961
+{txt} 5%    {res} 2.632011        .615593
+{txt}10%    {res} 4.125854         .77565       {txt}Obs         {res}      1,464
+{txt}25%    {res} 6.327633       .7879639       {txt}Sum of wgt. {res}      1,464
+
+{txt}50%    {res} 6.668945                      {txt}Mean          {res} 6.270713
+                        {txt}Largest       Std. dev.     {res} 1.359731
+{txt}75%    {res} 7.004105       7.499313
+{txt}90%    {res} 7.246239       7.500687       {txt}Variance      {res} 1.848867
+{txt}95%    {res} 7.333786       7.581398       {txt}Skewness      {res}-2.220382
+{txt}99%    {res} 7.489738       7.677155       {txt}Kurtosis      {res} 7.327917
+{txt}
+{com}. histogram time_event
+{txt}(bin={res}31{txt}, start={res}.445961{txt}, width={res}.23326431{txt})
+{res}{txt}
+{com}. 
+. tab sample_final
+
+{txt}sample_fina {c |}
+          l {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,389       96.87       96.87
+{txt}          1 {c |}{res}      1,466        3.13      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. 
+. stset time_event [pweight=vbsi16wgtra] if sample_final==1, failure(died==1) scale(1)
+
+{txt}Survival-time data settings
+
+{col 10}Failure event: {res}died==1
+{col 1}{txt}Observed time interval: {res}(0, time_event]
+{col 6}{txt}Exit on or before: {res}failure
+{col 17}{txt}Weight: {res}[pweight=vbsi16wgtra]
+{col 7}{txt}Keep observations 
+{col 17}{help j_st_ifvsoptif:{bf:if} {it:exp}}: {res}sample_final==1
+
+{txt}{hline 74}
+{res}     46,855{txt}  total observations
+{res}     45,389{txt}  ignored at outset because of {bf:if} {it:exp}
+{res}          2{txt}  event time missing (time_event>=.){col 61}PROBABLE ERROR
+{res}         51{txt}  weights invalid {col 61}PROBABLE ERROR
+{hline 74}
+{res}      1,413{txt}  observations remaining, representing
+{res}        275{txt}  failures in single-record/single-failure data
+{res}  8,836.204{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res}        0
+                                          {txt}Last observed exit t = {res} 7.677155
+{txt}
+{com}. 
+. 
+. stdescribe if sample_final==1
+
+{col 9}{txt}Failure {bf:_d}: {res}died==1
+{col 3}{txt}Analysis time {bf:_t}: {res}time_event
+{col 13}{txt}Weight: {res}[pweight=vbsi16wgtra]
+
+{txt}{col 36}{c LT}{hline 14} Per subject {hline 14}{c RT}
+Category{col 28}Total{col 41}Mean{col 54}Min{col 62}Median{col 76}Max
+{hline 78}
+Number of subjects    {res}      1413   
+{txt}Number of records     {res}      1413           1           1          1          1
+
+{txt}Entry time (first)                 {res}        0           0          0          0
+{txt}Exit time (final)                  {res} 6.253506     .445961    6.66758   7.677155
+
+{txt}Subjects with gap     {res}         0   
+{txt}Time on gap           {res}         0   
+{txt}Time at risk          {res} 8836.2037    6.253506     .445961    6.66758   7.677155
+
+{txt}Failures              {res}       275    .1946214           0          0          1
+{txt}{hline 78}
+Note: Reported estimates of total, mean, and median are unweighted.
+
+{com}. stsum if sample_final==1
+
+{col 9}{txt}Failure {bf:_d}: {res}died==1
+{col 3}{txt}Analysis time {bf:_t}: {res}time_event
+{col 13}{txt}Weight: {res}[pweight=vbsi16wgtra]
+
+{txt}{col 10}{c |}{col 26}Incidence{col 40}Number of{col 52}{c LT}{hline 6} Survival time {hline 5}{c RT}
+        {col 10}{c |} Time at risk{col 31}rate{col 41}subjects{col 57}25%{col 67}50%{col 77}75%
+{hline 9}{c +}{hline 69}
+   Total {c |} {res} 188455736.6   .0246679{col 40} 2.96e+07   7.677155  7.677155  7.677155
+{txt}
+{com}. strate if sample_final==1
+
+{col 9}{txt}Failure {bf:_d}: {res}died==1
+{col 3}{txt}Analysis time {bf:_t}: {res}time_event
+{col 13}{txt}Weight: {res}[pweight=vbsi16wgtra]
+
+{txt}Estimated failure rates
+
+Number of records  = {res}1413
+{txt}Number of clusters = {res}1413
+{txt}
+  {c TLC}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c TRC}
+  {c |} {res}      D         Y       Rate      Lower      Upper {txt}{c |}
+  {c LT}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c RT}
+  {c |} {res}4648812   1.9e+08   0.024668   0.021367   0.028601 {txt}{c |}
+  {c BLC}{hline 9}{c -}{hline 9}{c -}{hline 10}{c -}{hline 10}{c -}{hline 10}{c BRC}
+   Notes: Rate = D/Y = failures/person-time.
+          Lower and Upper are bounds of 95% jackknife
+          confidence intervals.
+
+
+{com}. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. **Inverse mills ratio**
+. 
+. capture drop sample_final_age50plus
+{txt}
+{com}. gen sample_final_age50plus=.
+{txt}(46,855 missing values generated)
+
+{com}. replace sample_final_age50plus=1 if sample_final==1
+{txt}(1,466 real changes made)
+
+{com}. replace sample_final_age50plus=0 if sample_final==0 & AGE>=50 & AGE~=.
+{txt}(18,682 real changes made)
+
+{com}. 
+. tab sample_final_age50plus
+
+{txt}sample_fina {c |}
+l_age50plus {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     18,682       92.72       92.72
+{txt}          1 {c |}{res}      1,466        7.28      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     20,148      100.00
+{txt}
+{com}. 
+. 
+. xi:probit sample_final_age50plus AGE SEX i.RACE_ETHN
+{txt}i.RACE_ETHN{col 19}_IRACE_ETHN_1-4{col 39}(naturally coded; _IRACE_ETHN_1 omitted)
+
+{res}{txt}Iteration 0:{space 2}Log likelihood = {res:-5247.2797}  
+Iteration 1:{space 2}Log likelihood = {res:-5141.7047}  
+Iteration 2:{space 2}Log likelihood = {res:-5140.6498}  
+Iteration 3:{space 2}Log likelihood = {res:-5140.6494}  
+{res}
+{txt}{col 1}Probit regression{col 57}{lalign 13:Number of obs}{col 70} = {res}{ralign 6:20,105}
+{txt}{col 57}{lalign 13:LR chi2({res:5})}{col 70} = {res}{ralign 6:213.26}
+{txt}{col 57}{lalign 13:Prob > chi2}{col 70} = {res}{ralign 6:0.0000}
+{txt}{col 1}{lalign 14:Log likelihood}{col 15} = {res}{ralign 10:-5140.6494}{txt}{col 57}{lalign 13:Pseudo R2}{col 70} = {res}{ralign 6:0.0203}
+
+{txt}{hline 23}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}sample_final_age50plus{col 24}{c |} Coefficient{col 36}  Std. err.{col 48}      z{col 56}   P>|z|{col 64}     [95% con{col 77}f. interval]
+{hline 23}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 19}AGE {c |}{col 24}{res}{space 2}  .011776{col 36}{space 2} .0012273{col 47}{space 1}    9.60{col 56}{space 3}0.000{col 64}{space 4} .0093706{col 77}{space 3} .0141814
+{txt}{space 19}SEX {c |}{col 24}{res}{space 2} .0011962{col 36}{space 2} .0271815{col 47}{space 1}    0.04{col 56}{space 3}0.965{col 64}{space 4}-.0520785{col 77}{space 3}  .054471
+{txt}{space 9}_IRACE_ETHN_2 {c |}{col 24}{res}{space 2}-.2512763{col 36}{space 2} .0373428{col 47}{space 1}   -6.73{col 56}{space 3}0.000{col 64}{space 4}-.3244668{col 77}{space 3}-.1780859
+{txt}{space 9}_IRACE_ETHN_3 {c |}{col 24}{res}{space 2}-.1735756{col 36}{space 2} .0403862{col 47}{space 1}   -4.30{col 56}{space 3}0.000{col 64}{space 4} -.252731{col 77}{space 3}-.0944201
+{txt}{space 9}_IRACE_ETHN_4 {c |}{col 24}{res}{space 2}-.3402551{col 36}{space 2} .0779079{col 47}{space 1}   -4.37{col 56}{space 3}0.000{col 64}{space 4}-.4929518{col 77}{space 3}-.1875585
+{txt}{space 17}_cons {c |}{col 24}{res}{space 2}-2.171673{col 36}{space 2} .0970596{col 47}{space 1}  -22.37{col 56}{space 3}0.000{col 64}{space 4}-2.361906{col 77}{space 3} -1.98144
+{txt}{hline 23}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. capture drop p1fin
+{txt}
+{com}. predict p1fin, xb
+{txt}(25988 missing values generated)
+
+{com}. 
+. capture drop phifin
+{txt}
+{com}. capture drop caphifin
+{txt}
+{com}. capture drop invmillsfin
+{txt}
+{com}. 
+. gen phifin=(1/sqrt(2*_pi))*exp(-(p1fin^2/2))
+{txt}(25,988 missing values generated)
+
+{com}. 
+. egen caphifin=std(p1fin)
+{txt}(25,988 missing values generated)
+
+{com}. 
+. capture drop invmillsfin
+{txt}
+{com}. gen invmillsfin=phifin/caphifin
+{txt}(25,988 missing values generated)
+
+{com}. 
+. 
+. su invmillsfin
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}invmillsfin {c |}{res}     20,867   -.0879463    2.025966  -46.45998   9.113869
+{txt}
+{com}. histogram invmillsfin
+{txt}(bin={res}43{txt}, start={res}-46.45998{txt}, width={res}1.2924151{txt})
+{res}{txt}
+{com}. 
+. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. **STEP 10: GENERATE EAA and Z-SCORES FOR EXPOSURES**
+. 
+. capture drop AGE
+{txt}
+{com}. gen AGE=AGE2016
+{txt}(25,943 missing values generated)
+
+{com}. 
+. su AGE if sample_final==1
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}AGE {c |}{res}      1,466    69.90518    9.670681         50         98
+{txt}
+{com}. histogram AGE if sample_final==1
+{txt}(bin={res}31{txt}, start={res}50{txt}, width={res}1.5483871{txt})
+{res}{txt}
+{com}. 
+. capture drop HORVATH_DNAMAGE_no_outliersEAA    
+{txt}
+{com}. capture drop HANNUM_DNAMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop LEVINE_DNAMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop DNAMGRIMAGE_no_outliersEAA   
+{txt}
+{com}. 
+. 
+. foreach var of varlist HORVATH_DNAMAGE_no_outliers HANNUM_DNAMAGE_no_outliers LEVINE_DNAMAGE_no_outliers DNAMGRIMAGE_no_outliers {c -(}
+{txt}  2{com}.         
+.         reg `var' AGE 
+{txt}  3{com}.         predict `var'EAA, resid
+{txt}  4{com}.         histogram `var'EAA
+{txt}  5{com}.         graph save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HIST`var'EAA.gph", replace
+{txt}  6{com}.         su `var'EAA
+{txt}  7{com}. {c )-}
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     4,018
+{txt}{hline 13}{c +}{hline 34}   F(1, 4016)      = {res}  4900.68
+{txt}       Model {c |} {res} 204198.485         1  204198.485   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 167336.272     4,016  41.6673985   {txt}R-squared       ={res}    0.5496
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5495
+{txt}       Total {c |} {res} 371534.758     4,017  92.4906043   {txt}Root MSE        =   {res}  6.455
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}HORVATH_DN~s{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}AGE {c |}{col 14}{res}{space 2} .7406215{col 26}{space 2} .0105796{col 37}{space 1}   70.00{col 46}{space 3}0.000{col 54}{space 4} .7198796{col 67}{space 3} .7613633
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 14.26264{col 26}{space 2} .7421424{col 37}{space 1}   19.22{col 46}{space 3}0.000{col 54}{space 4} 12.80763{col 67}{space 3} 15.71765
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(42,837 missing values generated)
+(bin={res}36{txt}, start={res}-36.132813{txt}, width={res}2.348567{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTHORVATH_DNAMAGE_no_outliersEAA.gph} saved
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+HORVATH_DN~A {c |}{res}      4,018   -6.48e-10    6.454225  -36.13281    48.4156
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     4,018
+{txt}{hline 13}{c +}{hline 34}   F(1, 4016)      = {res}  8418.39
+{txt}       Model {c |} {res} 231707.766         1  231707.766   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 110536.351     4,016  27.5239919   {txt}R-squared       ={res}    0.6770
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6769
+{txt}       Total {c |} {res} 342244.117     4,017  85.1989338   {txt}Root MSE        =   {res} 5.2463
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}HANNUM_DNA~s{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}AGE {c |}{col 14}{res}{space 2} .7889334{col 26}{space 2} .0085986{col 37}{space 1}   91.75{col 46}{space 3}0.000{col 54}{space 4} .7720754{col 67}{space 3} .8057913
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2}-.2293061{col 26}{space 2}  .603177{col 37}{space 1}   -0.38{col 46}{space 3}0.704{col 54}{space 4}-1.411868{col 67}{space 3} .9532554
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(42,837 missing values generated)
+(bin={res}36{txt}, start={res}-30.57519{txt}, width={res}2.0967731{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTHANNUM_DNAMAGE_no_outliersEAA.gph} saved
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+HANNUM_DNA~A {c |}{res}      4,018   -1.13e-08    5.245678  -30.57519   44.90864
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     4,018
+{txt}{hline 13}{c +}{hline 34}   F(1, 4016)      = {res}  4709.40
+{txt}       Model {c |} {res} 220274.251         1  220274.251   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 187841.611     4,016  46.7733096   {txt}R-squared       ={res}    0.5397
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.5396
+{txt}       Total {c |} {res} 408115.863     4,017  101.597178   {txt}Root MSE        =   {res} 6.8391
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}LEVINE_DNA~s{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}AGE {c |}{col 14}{res}{space 2} .7692224{col 26}{space 2} .0112091{col 37}{space 1}   68.63{col 46}{space 3}0.000{col 54}{space 4} .7472464{col 67}{space 3} .7911984
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 4.029403{col 26}{space 2} .7862996{col 37}{space 1}    5.12{col 46}{space 3}0.000{col 54}{space 4}  2.48782{col 67}{space 3} 5.570987
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(42,837 missing values generated)
+(bin={res}36{txt}, start={res}-28.078871{txt}, width={res}1.9478243{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTLEVINE_DNAMAGE_no_outliersEAA.gph} saved
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+LEVINE_DNA~A {c |}{res}      4,018    1.11e-08     6.83825  -28.07887    42.0428
+
+{txt}      Source {c |}       SS           df       MS      Number of obs   ={res}     4,018
+{txt}{hline 13}{c +}{hline 34}   F(1, 4016)      = {res}  9263.64
+{txt}       Model {c |} {res} 208691.744         1  208691.744   {txt}Prob > F        ={res}    0.0000
+{txt}    Residual {c |} {res} 90472.6664     4,016  22.5280544   {txt}R-squared       ={res}    0.6976
+{txt}{hline 13}{c +}{hline 34}   Adj R-squared   ={res}    0.6975
+{txt}       Total {c |} {res} 299164.411     4,017  74.4745857   {txt}Root MSE        =   {res} 4.7464
+
+{txt}{hline 13}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}DNAMGRIMAG~s{col 14}{c |} Coefficient{col 26}  Std. err.{col 38}      t{col 46}   P>|t|{col 54}     [95% con{col 67}f. interval]
+{hline 13}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 9}AGE {c |}{col 14}{res}{space 2} .7487256{col 26}{space 2} .0077791{col 37}{space 1}   96.25{col 46}{space 3}0.000{col 54}{space 4} .7334742{col 67}{space 3}  .763977
+{txt}{space 7}_cons {c |}{col 14}{res}{space 2} 16.10313{col 26}{space 2} .5456961{col 37}{space 1}   29.51{col 46}{space 3}0.000{col 54}{space 4} 15.03326{col 67}{space 3} 17.17299
+{txt}{hline 13}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{res}{txt}(42,837 missing values generated)
+(bin={res}36{txt}, start={res}-16.949423{txt}, width={res}1.0938289{txt})
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTDNAMGRIMAGE_no_outliersEAA.gph} saved
+
+    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+DNAMGRIMAG~A {c |}{res}      4,018    7.66e-10    4.745782  -16.94942   22.42842
+{txt}
+{com}. 
+. su  MPOA_no_outliers
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+MPOA_no_ou~s {c |}{res}      4,018    1.075154    .0916328     .73917    1.46429
+{txt}
+{com}. histogram MPOA_no_outliers
+{txt}(bin={res}36{txt}, start={res}.73917001{txt}, width={res}.02014222{txt})
+{res}{txt}
+{com}. graph save  "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTDunedinPoAmEAA.gph", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FIGURES\HRS_EPIGENETIC\HRS_HISTDunedinPoAmEAA.gph} saved
+
+{com}.  
+. 
+. 
+. *******Z-SCORE*************
+. 
+. capture drop zHORVATH_DNAMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop zHANNUM_DNAMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop zLEVINE_DNAMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop zDNAMGRIMAGE_no_outliersEAA 
+{txt}
+{com}. capture drop zMPOA_no_outliers 
+{txt}
+{com}. capture drop zfried_sum
+{txt}
+{com}. capture drop zses
+{txt}
+{com}. foreach var of varlist HORVATH_DNAMAGE_no_outliersEAA HANNUM_DNAMAGE_no_outliersEAA LEVINE_DNAMAGE_no_outliersEAA DNAMGRIMAGE_no_outliersEAA MPOA_no_outliers  fried_sum ses {c -(}
+{txt}  2{com}.         
+.         egen z`var'=std(`var') if sample_final==1
+{txt}  3{com}. {c )-}
+{txt}(45,389 missing values generated)
+(45,389 missing values generated)
+(45,389 missing values generated)
+(45,389 missing values generated)
+(45,389 missing values generated)
+(45,389 missing values generated)
+(45,389 missing values generated)
+
+{com}. 
+. su z*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+zHORVATH_D~A {c |}{res}      1,466   -1.36e-10           1  -4.903326   7.563644
+{txt}zHANNUM_DN~A {c |}{res}      1,466   -2.51e-10           1  -4.846578   6.544976
+{txt}zLEVINE_DN~A {c |}{res}      1,466    1.19e-09           1  -4.128853   4.562807
+{txt}zDNAMGRIMA~A {c |}{res}      1,466   -5.61e-10           1  -2.870699   4.302792
+{txt}zMPOA_no_o~s {c |}{res}      1,466    1.55e-10           1  -3.602304     3.9557
+{txt}{hline 13}{c +}{hline 57}
+{space 2}zfried_sum {c |}{res}      1,466    6.42e-09           1  -1.376428   2.790948
+{txt}{space 8}zses {c |}{res}      1,466    1.13e-08           1  -1.877589    3.38874
+{txt}
+{com}.  
+. **frail_status**
+. 
+. capture drop frail_status
+{txt}
+{com}. gen frail_status=.
+{txt}(46,855 missing values generated)
+
+{com}. replace frail_status=1 if fried_status==2
+{txt}(1,122 real changes made)
+
+{com}. replace frail_status=0 if fried_status==0 | fried_status==1 
+{txt}(3,603 real changes made)
+
+{com}. 
+.  
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. **STEP 11: GENERATE COVARIATES:**
+. 
+. su AGE 
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}AGE {c |}{res}     20,912    65.70931    11.79422         21        107
+{txt}
+{com}. tab1 SEX RACE_ETHN
+
+{res}-> tabulation of SEX  
+
+        {txt}SEX {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}     18,642       43.96       43.96
+{txt}          2 {c |}{res}     23,763       56.04      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     42,405      100.00
+
+-> tabulation of RACE_ETHN  
+
+  {txt}RACE_ETHN {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}     27,571       65.15       65.15
+{txt}          2 {c |}{res}      7,923       18.72       83.87
+{txt}          3 {c |}{res}      5,254       12.42       96.29
+{txt}          4 {c |}{res}      1,571        3.71      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     42,319      100.00
+{txt}
+{com}. 
+. capture drop SEX
+{txt}
+{com}. gen SEX=ragender
+{txt}(4,450 missing values generated)
+
+{com}. recode SEX (1=0) (2=1)
+{txt}(42,405 changes made to {bf:SEX})
+
+{com}. tab SEX
+
+        {txt}SEX {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     18,642       43.96       43.96
+{txt}          1 {c |}{res}     23,763       56.04      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     42,405      100.00
+{txt}
+{com}. 
+. capture drop NHB
+{txt}
+{com}. gen NHB=.
+{txt}(46,855 missing values generated)
+
+{com}. replace NHB=1 if RACE_ETHN==2
+{txt}(7,923 real changes made)
+
+{com}. replace NHB=0 if NHB~=1
+{txt}(38,932 real changes made)
+
+{com}. 
+. capture drop HISP
+{txt}
+{com}. gen HISP=.
+{txt}(46,855 missing values generated)
+
+{com}. replace HISP=1 if RACE_ETHN==3
+{txt}(5,254 real changes made)
+
+{com}. replace HISP=0 if HISP~=1
+{txt}(41,601 real changes made)
+
+{com}. 
+. capture drop OTHER
+{txt}
+{com}. gen OTHER=.
+{txt}(46,855 missing values generated)
+
+{com}. replace OTHER=1 if RACE_ETHN==4**
+{err}invalid syntax
+{txt}{search r(198), local:r(198);}
+
+end of do-file
+
+{search r(198), local:r(198);}
+
+{com}. do "C:\Users\baydounm\AppData\Local\Temp\STD3008_000000.tmp"
+{txt}
+{com}. 
+. capture drop OTHER
+{txt}
+{com}. gen OTHER=.
+{txt}(46,855 missing values generated)
+
+{com}. replace OTHER=1 if RACE_ETHN==4
+{txt}(1,571 real changes made)
+
+{com}. replace OTHER=0 if OTHER~=1
+{txt}(45,284 real changes made)
+
+{com}. 
+. tab1 NHB HISP OTHER
+
+{res}-> tabulation of NHB  
+
+        {txt}NHB {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     38,932       83.09       83.09
+{txt}          1 {c |}{res}      7,923       16.91      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+
+-> tabulation of HISP  
+
+       {txt}HISP {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     41,601       88.79       88.79
+{txt}          1 {c |}{res}      5,254       11.21      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+
+-> tabulation of OTHER  
+
+      {txt}OTHER {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     45,284       96.65       96.65
+{txt}          1 {c |}{res}      1,571        3.35      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     46,855      100.00
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

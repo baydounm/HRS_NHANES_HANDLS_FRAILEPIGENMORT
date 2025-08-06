@@ -1,0 +1,69 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. //STEP 13: CORRELATION MATRIX BETWEEN EPIGENTIC AGE ACCELERATION, EPIGENETIC CLOCKS AND TL VARIABLES//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin",clear
+{txt}
+{com}. 
+. 
+. // Step 1: Run the correlation command and save the matrix
+. corr zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm ses fried_sum 
+{txt}(obs=1,466)
+
+             {c |} zHorva~A zHannu~A zPheno~A zGrimA~A zDuned~m      ses fried_~m
+{hline 13}{c +}{hline 63}
+zHorvathAg~A {c |}{res}   1.0000
+{txt}zHannumAge~A {c |}{res}   0.4365   1.0000
+{txt}zPhenoAgeEAA {c |}{res}   0.2598   0.4255   1.0000
+{txt}zGrimAgeMo~A {c |}{res}   0.1142   0.2837   0.3392   1.0000
+{txt}zDunedinPoAm {c |}{res}   0.1242   0.1877   0.2394   0.6534   1.0000
+         {txt}ses {c |}{res}   0.0095  -0.0350  -0.1272  -0.2316  -0.1462   1.0000
+   {txt}fried_sum {c |}{res}   0.0538   0.0892   0.1236   0.2098   0.1612  -0.3582   1.0000
+
+{txt}
+{com}. matrix C = r(C)
+{txt}
+{com}. 
+. // Step 2: Clear the current dataset (optional if you don't need it)
+. clear
+{txt}
+{com}. 
+. // Step 3: Convert the matrix to a dataset with unique variable names
+. svmat C, names(col)
+{txt}number of observations will be reset to 7
+Press any key to continue, or Break to abort
+{p}
+Number of observations ({bf:_N}) was 0,
+now 7.
+{p_end}
+
+{com}. 
+. // Step 4: Save the dataset as a CSV file
+. export delimited using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\OUTPUT\HRS\HRS_correlation_matrix.csv", replace
+{res}{txt}file {bf:E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\OUTPUT\HRS\HRS_correlation_matrix.csv} saved
+
+{com}. 
+. **Add a column in excel sheet and re-type labels mannually. Change labels as needed. 
+. 
+{txt}end of do-file
+
+{com}. do "C:\Users\baydounm\AppData\Local\Temp\STD3008_000000.tmp"
+{txt}
+{com}. 
+. // Step 5: Reload your original dataset if needed
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin",clear
+{txt}
+{com}. 
+{txt}end of do-file
+
+{com}. do "C:\Users\baydounm\AppData\Local\Temp\STD3008_000000.tmp"
+{txt}
+{com}. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

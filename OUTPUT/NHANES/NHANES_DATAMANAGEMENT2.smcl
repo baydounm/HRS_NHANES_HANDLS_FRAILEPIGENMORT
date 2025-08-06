@@ -1,0 +1,1204 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. 
+. *******1999-00 and 2001-2002 waves dietary data*************************
+. 
+. clear
+{txt}
+{com}. import sasxport5 "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXIFF.xpt",clear
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXIFF.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXIFF.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. clear
+{txt}
+{com}. import sasxport5 "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXTOT.xpt",clear
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXTOT.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXTOT.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. clear
+{txt}
+{com}. import sasxport5 "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXIFF_B.xpt",clear
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXIFF_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXIFF_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. clear
+{txt}
+{com}. import sasxport5 "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXTOT_B.xpt",clear
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXTOT_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXTOT_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. ***********APPEND 1999-00 OVER 2001-2002 waves***********************
+. 
+. *************FOODS*****************
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXIFF.dta",clear
+{txt}
+{com}. gen WAVE=1
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXIFF_B.dta",clear
+{txt}
+{com}. gen WAVE=2
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF.dta",clear
+{txt}
+{com}. append using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFF_B.dta"
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. ********NUTRIENTS**************
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\1999_00\DRXTOT.dta",clear
+{txt}
+{com}. gen WAVE=1
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\2001_02\DRXTOT_B.dta",clear
+{txt}
+{com}. gen WAVE=2
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT.dta",clear
+{txt}
+{com}. append using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOT_B.dta"
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOTA_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOTA_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. ***************GET FOOD GROUPS/FOOD CODE DATA FROM THE HEI 2015 CALCULATION IN HANDLS AND PLACE IT IN THE DIETARY_DATA FOLDER; MODIFY VARIABLE NAMES; MERGE WITH DRXIFFA_B BY FOOD CODE VARIABLE******************
+. 
+. ***fped0016_finalized is obtained from the LE8 code for HEI-2015 from HANDLS****
+. ***drdifdcd***
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta",clear
+{txt}
+{com}. capture drop foodcode
+{txt}
+{com}. gen foodcode=drdifdcd
+{txt}
+{com}. sort foodcode
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\fped0016_finalized.dta",clear
+{txt}
+{com}. sort foodcode
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\fped0016_finalized.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\fped0016_finalized.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\fped0016_finalized.dta",clear
+{txt}
+{com}. merge foodcode using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+{p 0 4 2}
+variable{txt} foodcode
+does not uniquely identify observations in
+the master data
+{p_end}
+{p 0 7 2}
+(variable
+{bf:foodcode} was {bf:long}, now {bf:double} to accommodate using data's values)
+{p_end}
+{p 0 4 2}
+variable{txt} foodcode
+does not uniquely identify observations in
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B.dta
+{p_end}
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. su drxigrms
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}drxigrms {c |}{res}    275,115    141.0897    231.6114        .02       9360
+{txt}
+{com}. 
+. 
+. foreach x of varlist G_TOTAL G_WHL G_NWHL V_TOTAL V_DRKGR V_ORANGE V_POTATO V_STARCY V_TOMATO V_OTHER F_TOTAL F_CITMLB F_OTHER D_TOTAL D_MILK D_YOGURT D_CHEESE M_MPF M_MEAT M_ORGAN M_FRANK M_POULT M_FISH_HI M_FISH_LO M_EGG M_SOY M_NUTSD LEGUMES DISCFAT_OIL DISCFAT_SOL ADD_SUG A_BEV F_JUICE F_WHOLE {c -(}
+{txt}  2{com}.         gen `x'grams=`x'*drxigrms/100
+{txt}  3{com}.         
+. {c )-}
+{txt}(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+(128,078 missing values generated)
+
+{com}. 
+. 
+. collapse (sum) G_TOTALgrams-A_BEVgrams F_JUICEgrams F_WHOLEgrams, by(seqn)  
+{res}{txt}
+{com}. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016_collapse.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016_collapse.dta{rm}
+saved
+{p_end}
+
+{com}. sort seqn 
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016_collapse.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016_collapse.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use  "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOTA_B.dta",clear
+{txt}
+{com}. sort seqn 
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOTA_B.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXTOTA_B.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. merge seqn using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\DRXIFFA_B_fped0016_collapse.dta"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\HEI2015.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\RAW_DATA\NHANES_DATA\DIETARY_DATA\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. //STEP 10: HEI-2015 //
+. 
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", clear
+{txt}
+{com}. 
+. capture drop monofat 
+{txt}
+{com}. capture drop polyfat 
+{txt}
+{com}. capture drop add_sug 
+{txt}
+{com}. capture drop discfat_sol 
+{txt}
+{com}. capture drop alcohol 
+{txt}
+{com}. capture drop f_total 
+{txt}
+{com}. capture drop frtjuice 
+{txt}
+{com}. capture drop wholefrt 
+{txt}
+{com}. capture drop g_whl 
+{txt}
+{com}. capture drop d_total 
+{txt}
+{com}. capture drop Satfat 
+{txt}
+{com}. capture drop sodi 
+{txt}
+{com}. capture drop g_nwhl 
+{txt}
+{com}. capture drop sfat 
+{txt}
+{com}. capture drop kcal
+{txt}
+{com}. capture drop m_mpf
+{txt}
+{com}. capture drop m_egg
+{txt}
+{com}. capture drop m_nutsd
+{txt}
+{com}. capture drop m_soy
+{txt}
+{com}. capture drop m_fish_hi
+{txt}
+{com}. capture drop m_fish_lo
+{txt}
+{com}. capture drop legumes
+{txt}
+{com}. capture drop v_total
+{txt}
+{com}. capture drop v_drkgr
+{txt}
+{com}. 
+. gen monofat=drxtmfat
+{txt}(1,334 missing values generated)
+
+{com}. gen polyfat=drxtpfat
+{txt}(1,334 missing values generated)
+
+{com}. gen add_sug=ADD_SUGgrams 
+{txt}(1,034 missing values generated)
+
+{com}. gen discfat_sol=DISCFAT_SOLgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen alcohol=A_BEVgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen f_total=F_TOTALgrams  
+{txt}(1,034 missing values generated)
+
+{com}. gen frtjuice=F_JUICEgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen wholefrt=F_WHOLEgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen g_whl=G_WHLgrams 
+{txt}(1,034 missing values generated)
+
+{com}. gen d_total=D_TOTALgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen Satfat=drxtsfat 
+{txt}(1,334 missing values generated)
+
+{com}. gen sodi=drdtsodi
+{txt}(1,334 missing values generated)
+
+{com}. gen g_nwhl=G_NWHLgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen SatFat=drxtsfat
+{txt}(1,334 missing values generated)
+
+{com}. gen kcal=drxtkcal 
+{txt}(1,334 missing values generated)
+
+{com}. gen m_mpf=M_MPFgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen m_egg=M_EGGgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen m_nutsd=M_NUTSDgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen m_soy=M_SOYgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen m_fish_hi=M_FISH_HIgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen m_fish_lo=M_FISH_LOgrams 
+{txt}(1,034 missing values generated)
+
+{com}. gen legumes=LEGUMESgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen v_total=V_TOTALgrams
+{txt}(1,034 missing values generated)
+
+{com}. gen v_drkgr=V_DRKGRgrams
+{txt}(1,034 missing values generated)
+
+{com}. 
+.  
+. ***********LEGUME PART OF THE CODE**************
+. 
+. capture drop allmeat 
+{txt}
+{com}. capture drop seaplant
+{txt}
+{com}. capture drop mbmax
+{txt}
+{com}. capture drop meatleg
+{txt}
+{com}. capture drop legume_added_*
+{txt}
+{com}. capture drop meatveg
+{txt}
+{com}. capture drop extrmeat
+{txt}
+{com}. capture drop extrleg
+{txt}
+{com}. capture drop needmeat
+{txt}
+{com}. capture drop allmeat
+{txt}
+{com}. capture drop all2meat
+{txt}
+{com}. capture drop all2veg
+{txt}
+{com}. 
+. 
+. gen allmeat=m_mpf+m_egg+m_nutsd+m_soy
+{txt}(1,034 missing values generated)
+
+{com}. gen seaplant=m_fish_hi+m_fish_lo+m_nutsd + m_soy
+{txt}(1,034 missing values generated)
+
+{com}. gen mbmax=2.5*(kcal/1000)
+{txt}(1,334 missing values generated)
+
+{com}. gen needmeat=mbmax-allmeat if allmeat<mbmax
+{txt}(8,118 missing values generated)
+
+{com}. gen meatleg=4*legumes
+{txt}(1,034 missing values generated)
+
+{com}. /*Needs more meat, and all beans go to meat*/
+. gen all2meat=1 if meatleg<=needmeat /*folks who don't meet meat max and the amount
+> of legumes they consume is less than the amount they need to reach mbmax*/
+{txt}(877 missing values generated)
+
+{com}. foreach var in allmeat seaplant {c -(}
+{txt}  2{com}. gen legume_added_`var'=`var'+meatleg if all2meat==1
+{txt}  3{com}. {c )-}
+{txt}(1,911 missing values generated)
+(1,911 missing values generated)
+
+{com}. foreach var in v_total v_drkgr {c -(}
+{txt}  2{com}. gen legume_added_`var'=`var' if all2meat==1
+{txt}  3{com}. {c )-}
+{txt}(1,911 missing values generated)
+(1,911 missing values generated)
+
+{com}. /*Needs more meat, and some beans go to meat, some go to veggies*/
+. gen meatveg=1 if meatleg>needmeat
+{txt}(18,883 missing values generated)
+
+{com}. gen extrmeat=meatleg-needmeat
+{txt}(8,118 missing values generated)
+
+{com}. gen extrleg=extrmeat/4
+{txt}(8,118 missing values generated)
+
+{com}. foreach var in allmeat seaplant {c -(}
+{txt}  2{com}. replace legume_added_`var'=`var'+needmeat if meatveg==1 /*folks who don't meet
+> meat max and the amount of legumes they consume is more than the amount they need
+> to reach mbmax--rest go to veggies*/
+{txt}  3{com}. {c )-}
+{txt}(877 real changes made)
+(877 real changes made)
+
+{com}. foreach var in v_total v_drkgr {c -(}
+{txt}  2{com}. replace legume_added_`var'=`var'+extrleg if meatveg==1
+{txt}  3{com}. {c )-}
+{txt}(877 real changes made)
+(877 real changes made)
+
+{com}. gen all2veg=1 if allmeat>=mbmax /*Folks who meet the meat requirement so all
+> legumes count as veggies*/
+{txt}(11,947 missing values generated)
+
+{com}. foreach var in allmeat seaplant {c -(}
+{txt}  2{com}. replace legume_added_`var'=`var' if all2veg==1
+{txt}  3{com}. {c )-}
+{txt}(587 real changes made)
+(587 real changes made)
+
+{com}. foreach var in v_total v_drkgr {c -(}
+{txt}  2{com}. replace legume_added_`var'=`var'+legumes if all2veg==1
+{txt}  3{com}. {c )-}
+{txt}(587 real changes made)
+(587 real changes made)
+
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture drop monopoly
+{txt}
+{com}. capture drop addsugc
+{txt}
+{com}. capture drop solfatc
+{txt}
+{com}. capture drop maxalcgr
+{txt}
+{com}. capture drop ethcal
+{txt}
+{com}. capture drop exalccal
+{txt}
+{com}. capture drop emptycal10
+{txt}
+{com}. capture drop vegden
+{txt}
+{com}. capture drop hei*
+{txt}
+{com}. capture drop grbnden
+{txt}
+{com}. capture drop frtden
+{txt}
+{com}. capture drop wholefrt
+{txt}
+{com}. capture drop whfrden
+{txt}
+{com}. capture drop wgrnden
+{txt}
+{com}. capture drop monopoly
+{txt}
+{com}. capture drop farmin
+{txt}
+{com}. capture drop farmax
+{txt}
+{com}. capture drop sodden
+{txt}
+{com}. capture drop sodmin
+{txt}
+{com}. capture drop sodmax
+{txt}
+{com}. capture drop rgden
+{txt}
+{com}. capture drop rgmin
+{txt}
+{com}. capture drop rgmax
+{txt}
+{com}. capture drop sofa*
+{txt}
+{com}. capture drop addedsugar_perc 
+{txt}
+{com}. capture drop addsugmin 
+{txt}
+{com}. capture dorp addsugmax 
+{txt}
+{com}. capture drop heix12_addedsugar
+{txt}
+{com}. capture drop saturatedfat_perc 
+{txt}
+{com}. capture drop saturatedfatmin 
+{txt}
+{com}. capture drop saturatedfatmax 
+{txt}
+{com}. capture drop heix13_saturatedfat
+{txt}
+{com}. 
+. 
+. 
+. /*This do file creates HEI-2015 component densities and scores*/
+. gen monopoly=monofat+polyfat
+{txt}(1,334 missing values generated)
+
+{com}. gen addsugc=16*add_sug
+{txt}(1,034 missing values generated)
+
+{com}. gen solfatc=9*discfat_sol
+{txt}(1,034 missing values generated)
+
+{com}. gen maxalcgr=13*(kcal/1000)
+{txt}(1,334 missing values generated)
+
+{com}. gen ethcal=7*alcohol
+{txt}(1,034 missing values generated)
+
+{com}. gen exalccal=7*(alcohol-maxalcgr)
+{txt}(1,339 missing values generated)
+
+{com}. replace exalccal=0 if alcohol<=maxalcgr
+{txt}(19,356 real changes made)
+
+{com}. gen emptycal10=addsugc+solfatc+exalccal
+{txt}(1,034 missing values generated)
+
+{com}. gen vegden=legume_added_v_total/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix1_totalveg=5*(vegden/1.1)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix1_totalveg=5 if heix1_totalveg>5
+{txt}(3,829 real changes made)
+
+{com}. replace heix1_totalveg=0 if heix1_totalveg<0
+{txt}(0 real changes made)
+
+{com}. gen grbnden=legume_added_v_drkgr/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix2_greens_and_bean=5*(grbnden/.2)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix2_greens_and_bean=5 if heix2_greens_and_bean>5
+{txt}(3,166 real changes made)
+
+{com}. replace heix2_greens_and_bean=0 if heix2_greens_and_bean<0
+{txt}(0 real changes made)
+
+{com}. gen frtden=f_total/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix3_totalfruit=5*(frtden/.8)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix3_totalfruit=5 if heix3_totalfruit>5
+{txt}(5,222 real changes made)
+
+{com}. replace heix3_totalfruit=0 if heix3_totalfruit<0
+{txt}(0 real changes made)
+
+{com}. gen wholefrt=f_total-frtjuice
+{txt}(1,034 missing values generated)
+
+{com}. gen whfrden=wholefrt/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix4_wholefruit=5*(whfrden/.4)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix4_wholefruit=5 if heix4_wholefruit>5
+{txt}(3,639 real changes made)
+
+{com}. replace heix4_wholefruit=0 if heix4_wholefruit<0
+{txt}(44 real changes made)
+
+{com}. gen wgrnden=g_whl/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix5_wholegrain=10*(wgrnden/1.5)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix5_wholegrain=10 if heix5_wholegrain>10
+{txt}(1,626 real changes made)
+
+{com}. replace heix5_wholegrain=0 if heix5_wholegrain<0
+{txt}(0 real changes made)
+
+{com}. gen dairyden=d_total/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix6_totaldairy=10*(dairyden/1.3)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix6_totaldairy=10 if heix6_totaldairy>10
+{txt}(6,025 real changes made)
+
+{com}. replace heix6_totaldairy=0 if heix6_totaldairy<0
+{txt}(0 real changes made)
+
+{com}. gen meatden=legume_added_allmeat/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix7_totprot=5*(meatden/2.5)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix7_totprot=5 if heix7_totprot>5
+{txt}(8,142 real changes made)
+
+{com}. replace heix7_totprot=0 if heix7_totprot<0
+{txt}(0 real changes made)
+
+{com}. gen seaplden=legume_added_seaplant/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen heix8_seaplant_prot=5*(seaplden/.8)
+{txt}(1,339 missing values generated)
+
+{com}. replace heix8_seaplant_prot=5 if heix8_seaplant_prot>5
+{txt}(4,249 real changes made)
+
+{com}. replace heix8_seaplant_prot=0 if heix8_seaplant_prot<0
+{txt}(0 real changes made)
+
+{com}. gen faratio=monopoly/SatFat if SatFat>0
+{txt}(1,352 missing values generated)
+
+{com}. 
+. 
+. 
+. 
+. gen farmin=1.2
+{txt}
+{com}. gen farmax=2.5
+{txt}
+{com}. gen heix9_fattyacid=0 if SatFat==0 & monopoly==0
+{txt}(19,742 missing values generated)
+
+{com}. replace heix9_fattyacid=10 if SatFat==0 & monopoly>0
+{txt}(0 real changes made)
+
+{com}. replace heix9_fattyacid=10 if faratio>=farmax & faratio !=.
+{txt}(2,623 real changes made)
+
+{com}. replace heix9_fattyacid=0 if faratio<=farmin & faratio !=.
+{txt}(2,792 real changes made)
+
+{com}. replace heix9_fattyacid=10*((faratio-farmin)/(farmax-farmin)) if faratio !=.
+{txt}(18,407 real changes made)
+
+{com}. gen sodden=sodi/kcal
+{txt}(1,339 missing values generated)
+
+{com}. gen sodmin=1.1
+{txt}
+{com}. gen sodmax=2
+{txt}
+{com}. gen heix10_sodium=10
+{txt}
+{com}. replace heix10_sodium=0 if sodden>=sodmax
+{txt}(4,256 real changes made)
+
+{com}. replace heix10_sodium=10-(10*(sodden-sodmin)/(sodmax-sodmin))
+{txt}(19,759 real changes made, 1,339 to missing)
+
+{com}. gen rgden=g_nwhl/(kcal/1000)
+{txt}(1,339 missing values generated)
+
+{com}. gen rgmin=1.8
+{txt}
+{com}. gen rgmax=4.3
+{txt}
+{com}. gen heix11_refinedgrain=10
+{txt}
+{com}. replace heix11_refinedgrain=0 if rgden>=rgmax
+{txt}(2,719 real changes made)
+
+{com}. replace heix11_refinedgrain=10-(10*(rgden-rgmin)/(rgmax-rgmin))
+{txt}(19,760 real changes made, 1,339 to missing)
+
+{com}. 
+. 
+. gen addedsugar_perc=100*add_sug*16/kcal
+{txt}(1,339 missing values generated)
+
+{com}. gen addsugmin=6.5
+{txt}
+{com}. gen addsugmax=26
+{txt}
+{com}. gen heix12_addedsugar=0 if addedsugar_perc>=addsugmax
+{txt}(17,238 missing values generated)
+
+{com}. replace heix12_addedsugar=10 if addedsugar_perc<=addsugmin
+{txt}(12,209 real changes made)
+
+{com}. replace heix12_addedsugar=10-(10*(addedsugar_perc-addsugmin)/(addsugmax-addsugmin))
+{txt}(19,760 real changes made, 1,339 to missing)
+
+{com}. 
+. 
+. 
+. gen saturatedfat_perc=100*SatFat*9/kcal
+{txt}(1,339 missing values generated)
+
+{com}. gen saturatedfatmin=7
+{txt}
+{com}. gen saturatedfatmax=15
+{txt}
+{com}. gen heix13_saturatedfat=0 if saturatedfat_perc>=saturatedfatmax
+{txt}(15,491 missing values generated)
+
+{com}. replace heix13_saturatedfat=10 if saturatedfat_perc<=saturatedfatmin
+{txt}(2,465 real changes made)
+
+{com}. replace heix13_saturatedfat=10-(10*(saturatedfat_perc-saturatedfatmin)/(saturatedfatmax-saturatedfatmin))
+{txt}(19,759 real changes made, 1,339 to missing)
+
+{com}. 
+. 
+. foreach var in vegden grbnden frtden whfrden wgrnden dairyden meatden seaplden faratio sodden rgden {c -(}
+{txt}  2{com}. replace `var'=0 if `var'==.
+{txt}  3{com}. {c )-}
+{txt}(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+(1,352 real changes made)
+(1,339 real changes made)
+(1,339 real changes made)
+
+{com}. 
+. 
+. 
+. 
+. foreach var in 1_totalveg 2_greens_and_bean 3_totalfruit 4_wholefruit 5_wholegrain 6_totaldairy 7_totprot 8_seaplant 9_fattyacid 10_sodium 11_refinedgrain 12_addedsugar 13_saturatedfat {c -(}
+{txt}  2{com}. replace heix`var'=0 if kcal==0
+{txt}  3{com}. {c )-}
+{txt}(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(0 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+(5 real changes made)
+
+{com}. foreach var in 1_totalveg 2_greens_and_bean 3_totalfruit 4_wholefruit 5_wholegrain 6_totaldairy 7_totprot 8_seaplant 9_fattyacid 10_sodium 11_refinedgrain 12_addedsugar 13_saturatedfat {c -(}
+{txt}  2{com}. replace heix`var'=0 if heix`var'<0 & heix`var'!=.
+{txt}  3{com}. {c )-}
+{txt}(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(0 real changes made)
+(2,792 real changes made)
+(2,916 real changes made)
+(1,380 real changes made)
+(1,183 real changes made)
+(2,929 real changes made)
+
+{com}. foreach var in 9_fattyacid 10_sodium 11_refinedgrain {c -(}
+{txt}  2{com}. replace heix`var'=10 if heix`var'>10 & heix`var'!=.
+{txt}  3{com}. {c )-}
+{txt}(2,622 real changes made)
+(3,684 real changes made)
+(9,325 real changes made)
+
+{com}. replace heix12_addedsugar=10 if heix12_addedsugar>10 & heix12_addedsugar!=.
+{txt}(12,209 real changes made)
+
+{com}. replace heix13_saturatedfat=10 if heix13_saturatedfat>10 & heix13_saturatedfat!=.
+{txt}(2,465 real changes made)
+
+{com}. 
+. 
+. gen hei2015_total_score=heix1_totalveg+heix2_greens_and_bean+heix3_totalfruit+ ///
+> heix4_wholefruit+heix5_wholegrain+heix6_totaldairy+heix7_totprot+heix8_seaplant ///
+> +heix9_fattyacid+heix10_sodium+heix11_refinedgrain+heix12_addedsugar+heix13_saturatedfat
+{txt}(1,334 missing values generated)
+
+{com}. 
+. 
+. 
+. label var hei2015_total_score "total hei-2015 score"
+{txt}
+{com}. label var heix1_totalveg "hei-2015 component 1 total vegetables"
+{txt}
+{com}. label var heix2_greens_and_bean "hei-2015 component 2 greens and beans"
+{txt}
+{com}. label var heix3_totalfruit "hei-2015 component 3 total fruit"
+{txt}
+{com}. label var heix4_wholefruit "hei-2015 component 4 whole fruit"
+{txt}
+{com}. label var heix5_wholegrain "hei-2015 component 5 whole grains"
+{txt}
+{com}. label var heix6_totaldairy "hei-2015 component 6 dairy"
+{txt}
+{com}. label var heix7_totprot "hei-2015 component 7 total protein foods"
+{txt}
+{com}. 
+. label var heix8_seaplant_prot "hei-2015 component 8 seafood and plant protein"
+{txt}
+{com}. label var heix9_fattyacid "hei-2015 component 9 fatty acid ratio"
+{txt}
+{com}. label var heix10_sodium "hei-2015 component 10 sodium"
+{txt}
+{com}. label var heix11_refinedgrain "hei-2015 component 11 refined grains"
+{txt}
+{com}. label var heix12_addedsugar "hei-2015 component 12 added sugar"
+{txt}
+{com}. label var heix13_saturatedfat "hei-2015 component 13 saturated fat"
+{txt}
+{com}. 
+. label var vegden "density of mped total vegetables per 1000 kcal"
+{txt}
+{com}. label var grbnden "density of mped of dark green veg and beans per 1000 kcal"
+{txt}
+{com}. label var frtden "density of mped total fruit per 1000 kcal"
+{txt}
+{com}. label var whfrden "density of mped whole fruit per 1000 kcal"
+{txt}
+{com}. label var wgrnden "density of mped of whole grain per 1000 kcal"
+{txt}
+{com}. label var dairyden "density of mped of dairy per 1000 kcal"
+{txt}
+{com}. label var meatden "density of mped total meat/protein per 1000 kcal"
+{txt}
+{com}. label var seaplden "denstiy of mped of seafood and plant protein per 1000 kcal"
+{txt}
+{com}. label var faratio "fatty acid ratio"
+{txt}
+{com}. label var sodden "density of sodium per 1000 kcal"
+{txt}
+{com}. label var rgden "density of mped of refined grains per 1000 kcal"
+{txt}
+{com}. label var addedsugar_perc "percent of calories from added sugar"
+{txt}
+{com}. label var saturatedfat_perc "percent of calories from saturated fat"
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. keep seqn hei* vegden grbnden frtden whfrden dairyden meatden seaplden faratio sodden rgden addedsugar_perc saturatedfat_perc-saturatedfat_perc 
+{txt}
+{com}. 
+. su hei*
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+heix1_tota~g {c |}{res}     19,760    1.943543    1.902463          0          5
+{txt}heix2_gree~n {c |}{res}     19,760    .9008381    1.877381          0          5
+{txt}heix3_tota~t {c |}{res}     19,760    1.720422    2.210251          0          5
+{txt}heix4_whol~t {c |}{res}     19,760    1.168686    1.976961          0          5
+{txt}heix5_whol~n {c |}{res}     19,760    1.571744    2.986512          0         10
+{txt}{hline 13}{c +}{hline 57}
+heix6_tota~y {c |}{res}     19,760    5.614789    3.865808          0         10
+{txt}heix7_totp~t {c |}{res}     19,760      3.5443     1.75533          0          5
+{txt}heix8_seap~t {c |}{res}     19,760    1.386763    2.097656          0          5
+{txt}heix9_fatt~d {c |}{res}     18,426    4.321517    3.513238          0         10
+{txt}heix10_sod~m {c |}{res}     18,426    5.513857    3.660317          0         10
+{txt}{hline 13}{c +}{hline 57}
+heix11_ref~n {c |}{res}     18,426     7.67411    3.307199          0         10
+{txt}heix12_add~r {c |}{res}     18,426    8.603598    2.862231          0         10
+{txt}heix13_sat~t {c |}{res}     18,426    4.947644    3.499122          0         10
+{txt}hei2015_to~e {c |}{res}     18,426     46.5843    10.79192          0   92.93847
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort seqn
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. //STEP 11: MERGE THIS FILE WITH THE MAIN FILE AND CREATE SES variable//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015", clear
+{txt}
+{com}. sort seqn
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",clear
+{txt}
+{com}. sort seqn
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. merge seqn using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\HEI2015"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",clear
+{txt}
+{com}. 
+. su indfmpir dmdeduc2
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 4}indfmpir {c |}{res}     18,727     2.26702    1.602369          0          5
+{txt}{space 4}dmdeduc2 {c |}{res}     10,285    3.107827    1.384452          1          9
+{txt}
+{com}. 
+. 
+. **DMDEDUC2 (Adults, 20+ years) is usually coded as:
+. **1: Less than 9th grade
+. **2: 9–11th grade (includes 12th grade with no diploma)
+. **3: High school graduate or equivalent (GED)
+. **4: Some college or AA degree
+. **5: College graduate or above
+. 
+. 
+. **INDFMPIR (Family PIR - Poverty Income Ratio)
+. **The PIR (Poverty Income Ratio) is calculated as the ratio of family income to the poverty threshold.
+. **It is a continuous variable, often ranging from 0 to 5 (capped at 5 for high-income participants).
+. 
+. capture drop pir
+{txt}
+{com}. gen pir=.
+{txt}(21,005 missing values generated)
+
+{com}. replace pir=indfmpir if indfmpir~=7 & indfmpir~=9
+{txt}(18,727 real changes made)
+
+{com}. su pir
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}pir {c |}{res}     18,727     2.26702    1.602369          0          5
+{txt}
+{com}. histogram pir
+{txt}(bin={res}42{txt}, start={res}0{txt}, width={res}.11904762{txt})
+{res}{txt}
+{com}. 
+. capture drop education
+{txt}
+{com}. gen education=.
+{txt}(21,005 missing values generated)
+
+{com}. replace education=dmdeduc2
+{txt}(10,285 real changes made)
+
+{com}. 
+. capture drop ses
+{txt}
+{com}. pca pir education,factors(1)
+
+{txt}Principal components/correlation{col 50}Number of obs    = {res}     9,108
+{col 50}{txt}Number of comp.  = {res}         1
+{col 50}{txt}Trace            {col 67}=  {res}        2
+{col 5}{txt}Rotation: (unrotated = principal){col 50}Rho              = {res}    0.7423
+
+{txt}{col 5}{hline 13}{c TT}{hline 60}
+{col 5}   Component {c |}   Eigenvalue   Difference         Proportion   Cumulative
+{col 5}{hline 13}{c +}{hline 60}
+{col 5}{ralign 12:Comp1} {c |}{res}      1.48455      .969098             0.7423       0.7423
+{txt}{col 5}{ralign 12:Comp2} {c |}{res}      .515451            .             0.2577       1.0000
+{txt}{col 5}{hline 13}{c BT}{hline 60}
+
+Principal components (eigenvectors) 
+
+{space 4}{hline 13}{c  TT}{hline 10}{c  TT}{hline 13}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}{c |}{space 1}{ralign 11:Unexplained}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}{c   +}{hline 13}
+{space 4}{space 0}{ralign 12:pir}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .2577}}}{space 1}
+{space 4}{space 0}{ralign 12:education}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}{c |}{space 1}{center 11:{res:{sf:      .2577}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}{c  BT}{hline 13}
+
+{com}. predict ses
+{txt}({bf:score} assumed)
+
+Scoring coefficients 
+{col 5}sum of squares(column-loading) = 1
+
+{space 4}{hline 13}{c  TT}{hline 10}
+{space 4}{space 0}{ralign 12:Variable}{space 1}{c |}{space 1}{ralign 8:Comp1}{space 1}
+{space 4}{hline 13}{c   +}{hline 10}
+{space 4}{space 0}{ralign 12:pir}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}
+{space 4}{space 0}{ralign 12:education}{space 1}{c |}{space 1}{ralign 8:{res:{sf:  0.7071}}}{space 1}
+{space 4}{hline 13}{c  BT}{hline 10}
+
+{com}. 
+. su ses
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 9}ses {c |}{res}      9,108   -6.82e-09    1.218421  -2.240291   4.078428
+{txt}
+{com}. histogram ses
+{txt}(bin={res}39{txt}, start={res}-2.2402914{txt}, width={res}.16201844{txt})
+{res}{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET.dta{rm}
+saved
+{p_end}
+
+{com}. capture drop _merge
+{txt}
+{com}. sort seqn 
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

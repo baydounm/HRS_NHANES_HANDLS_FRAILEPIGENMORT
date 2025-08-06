@@ -1,0 +1,301 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. 
+. //STEP 13: MERGE FRAILTY DATA WITH OTHER VARIABLES IN NHANES//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\FRAILTY_NHANES.dta",clear
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. sort seqn
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\FRAILTY_NHANES.dta",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\FRAILTY_NHANES.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. merge seqn using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET"
+{txt}{p}
+(you are using old
+{bf:merge} syntax; see
+{bf:{help merge:[D] merge}} for new syntax)
+{p_end}
+
+{com}. tab _merge
+
+     {txt}_merge {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          2 {c |}{res}          1        0.00        0.00
+{txt}          3 {c |}{res}     21,004      100.00      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. sort seqn
+{txt}
+{com}. capture drop _merge
+{txt}
+{com}. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. //STEP 14: STUDY SAMPLE SELECTION STEP, INVERSE MILLS RATIO, USING AGE>=50Y RESTRICTION//
+. 
+. **AGE 50+ Y**
+. 
+. capture drop sample1
+{txt}
+{com}. gen sample1=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample1=1 if AGE>=50 & AGE~=.
+{txt}(4,983 real changes made)
+
+{com}. replace sample1=0 if sample1~=1
+{txt}(16,022 real changes made)
+
+{com}. 
+. tab sample1   
+
+    {txt}sample1 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     16,022       76.28       76.28
+{txt}          1 {c |}{res}      4,983       23.72      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. 
+. **HEI-2015 and SES DATA AVAILABLE**
+. 
+. capture drop sample2
+{txt}
+{com}. gen sample2=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample2=1 if frailty_score~=.   & ses~=.
+{txt}(3,137 real changes made)
+
+{com}. replace sample2=0 if sample2~=1
+{txt}(17,868 real changes made)
+
+{com}. 
+. tab sample2  
+
+    {txt}sample2 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     17,868       85.07       85.07
+{txt}          1 {c |}{res}      3,137       14.93      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. 
+. 
+. **EPIGENETIC CLOCK DATA AVAILABLE**
+. 
+. capture drop sample3
+{txt}
+{com}. gen sample3=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample3=1 if zHorvathAgeEAA~=. & zHannumAgeEAA~=. & zPhenoAgeEAA~=. & zGrimAgeMortEAA~=. & zDunedinPoAm~=.
+{txt}(2,532 real changes made)
+
+{com}. replace sample3=0 if sample3~=1
+{txt}(18,473 real changes made)
+
+{com}. 
+. tab sample3  
+
+    {txt}sample3 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     18,473       87.95       87.95
+{txt}          1 {c |}{res}      2,532       12.05      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. 
+. **HEI DATA AVAILABLE AND 50+Y**
+. 
+. capture drop sample4
+{txt}
+{com}. gen sample4=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample4=1 if sample1==1 & sample2==1
+{txt}(2,616 real changes made)
+
+{com}. replace sample4=0 if sample4~=1
+{txt}(18,389 real changes made)
+
+{com}. 
+. tab sample4
+
+    {txt}sample4 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     18,389       87.55       87.55
+{txt}          1 {c |}{res}      2,616       12.45      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. 
+. **HEI and EPIGENETIC CLOCK DATA AVAILABLE AND 50+Y**
+. 
+. 
+. capture drop sample5
+{txt}
+{com}. gen sample5=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample5=1 if sample4==1 & sample3==1
+{txt}(1,537 real changes made)
+
+{com}. replace sample5=0 if sample5~=1
+{txt}(19,468 real changes made)
+
+{com}. 
+. tab sample5
+
+    {txt}sample5 {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     19,468       92.68       92.68
+{txt}          1 {c |}{res}      1,537        7.32      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. 
+. capture drop sample_final
+{txt}
+{com}. gen sample_final=sample5
+{txt}
+{com}. 
+. 
+. tab sample_final
+
+{txt}sample_fina {c |}
+          l {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     19,468       92.68       92.68
+{txt}          1 {c |}{res}      1,537        7.32      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,005      100.00
+{txt}
+{com}. 
+. **Inverse mills ratio**
+. 
+. capture drop sample_final_age50plus
+{txt}
+{com}. gen sample_final_age50plus=.
+{txt}(21,005 missing values generated)
+
+{com}. replace sample_final_age50plus=1 if sample_final==1
+{txt}(1,537 real changes made)
+
+{com}. replace sample_final_age50plus=0 if sample_final==0 & AGE>=50 & AGE~=.
+{txt}(3,446 real changes made)
+
+{com}. 
+. tab sample_final_age50plus
+
+{txt}sample_fina {c |}
+l_age50plus {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      3,446       69.16       69.16
+{txt}          1 {c |}{res}      1,537       30.84      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      4,983      100.00
+{txt}
+{com}. 
+. 
+. xi:probit sample_final_age50plus AGE SEX i.RACE
+{txt}i.RACE{col 19}_IRACE_0-3{col 39}(naturally coded; _IRACE_0 omitted)
+
+{res}{txt}Iteration 0:{space 2}Log likelihood = {res:-3078.7656}  
+Iteration 1:{space 2}Log likelihood = {res:-2939.9497}  
+Iteration 2:{space 2}Log likelihood = {res: -2939.567}  
+Iteration 3:{space 2}Log likelihood = {res: -2939.567}  
+{res}
+{txt}{col 1}Probit regression{col 57}{lalign 13:Number of obs}{col 70} = {res}{ralign 6:4,983}
+{txt}{col 57}{lalign 13:LR chi2({res:5})}{col 70} = {res}{ralign 6:278.40}
+{txt}{col 57}{lalign 13:Prob > chi2}{col 70} = {res}{ralign 6:0.0000}
+{txt}{col 1}{lalign 14:Log likelihood}{col 15} = {res}{ralign 9:-2939.567}{txt}{col 57}{lalign 13:Pseudo R2}{col 70} = {res}{ralign 6:0.0452}
+
+{txt}{hline 23}{c TT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{col 1}sample_final_age50plus{col 24}{c |} Coefficient{col 36}  Std. err.{col 48}      z{col 56}   P>|z|{col 64}     [95% con{col 77}f. interval]
+{hline 23}{c +}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+{space 19}AGE {c |}{col 24}{res}{space 2} .0175355{col 36}{space 2} .0018658{col 47}{space 1}    9.40{col 56}{space 3}0.000{col 64}{space 4} .0138786{col 77}{space 3} .0211924
+{txt}{space 19}SEX {c |}{col 24}{res}{space 2}-.0710071{col 36}{space 2}  .037976{col 47}{space 1}   -1.87{col 56}{space 3}0.062{col 64}{space 4}-.1454387{col 77}{space 3} .0034245
+{txt}{space 14}_IRACE_1 {c |}{col 24}{res}{space 2} .4596442{col 36}{space 2} .0522752{col 47}{space 1}    8.79{col 56}{space 3}0.000{col 64}{space 4} .3571867{col 77}{space 3} .5621017
+{txt}{space 14}_IRACE_2 {c |}{col 24}{res}{space 2} .6611139{col 36}{space 2} .0459595{col 47}{space 1}   14.38{col 56}{space 3}0.000{col 64}{space 4}  .571035{col 77}{space 3} .7511929
+{txt}{space 14}_IRACE_3 {c |}{col 24}{res}{space 2} .4276203{col 36}{space 2} .1114452{col 47}{space 1}    3.84{col 56}{space 3}0.000{col 64}{space 4} .2091918{col 77}{space 3} .6460488
+{txt}{space 17}_cons {c |}{col 24}{res}{space 2}-1.851359{col 36}{space 2}  .143347{col 47}{space 1}  -12.92{col 56}{space 3}0.000{col 64}{space 4}-2.132314{col 77}{space 3}-1.570404
+{txt}{hline 23}{c BT}{hline 11}{hline 11}{hline 9}{hline 8}{hline 13}{hline 12}
+
+{com}. 
+. capture drop p1fin
+{txt}
+{com}. predict p1fin, xb
+{txt}(1 missing values generated)
+
+{com}. 
+. capture drop phifin
+{txt}
+{com}. capture drop caphifin
+{txt}
+{com}. capture drop invmillsfin
+{txt}
+{com}. 
+. gen phifin=(1/sqrt(2*_pi))*exp(-(p1fin^2/2))
+{txt}(1 missing value generated)
+
+{com}. 
+. egen caphifin=std(p1fin)
+{txt}(1 missing value generated)
+
+{com}. 
+. capture drop invmillsfin
+{txt}
+{com}. gen invmillsfin=phifin/caphifin
+{txt}(1 missing value generated)
+
+{com}. 
+. 
+. su invmillsfin
+
+{txt}    Variable {c |}        Obs        Mean    Std. dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 1}invmillsfin {c |}{res}     21,004    .5782265    6.216652  -32.01187   68.53734
+{txt}
+{com}. histogram invmillsfin
+{txt}(bin={res}43{txt}, start={res}-32.011868{txt}, width={res}2.3383536{txt})
+{res}{txt}
+{com}. 
+. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

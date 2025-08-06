@@ -1,0 +1,339 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. **STEP 1: COMBINE THE COHORT PRIOR TO DISCRETIZATION**
+. 
+. **NHANES**
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin.dta",clear
+{txt}
+{com}. 
+. capture drop zses
+{txt}
+{com}. egen zses=std(ses) if sample_final==1
+{txt}(19,468 missing values generated)
+
+{com}. 
+. keep seqn COHORT _st _d _t _t0 TIMEyears DIED sample_final invmillsfin AGE HorvathAgeEAA_no_outliers HannumAgeEAA_no_outliers PhenoAgeEAA_no_outliers GrimAgeMortEAA_no_outliers DunedinPoAm_no_outliers zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm ses  zses hei2015_total_score RACE SEX AGE WTDN4YR sdmvpsu sdmvstra  frail*
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_SMALL",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_SMALL.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. capture drop ID
+{txt}
+{com}. gen ID=seqn
+{txt}(1 missing value generated)
+
+{com}. 
+. capture drop seqn 
+{txt}
+{com}. 
+. tab SEX
+
+        {txt}SEX {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}     10,214       48.63       48.63
+{txt}          2 {c |}{res}     10,790       51.37      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,004      100.00
+{txt}
+{com}. 
+. replace SEX=0 if SEX==1
+{txt}(10,214 real changes made)
+
+{com}. replace SEX=1 if SEX==2
+{txt}(10,790 real changes made)
+
+{com}. 
+. 
+. capture rename WTDN4YR sampling_weight
+{txt}
+{com}. capture rename sdmvpsu PSU
+{txt}
+{com}. capture rename sdmvstra STRATUM
+{txt}
+{com}. 
+. tab RACE 
+
+       {txt}RACE {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      7,973       37.96       37.96
+{txt}          1 {c |}{res}      4,909       23.37       61.33
+{txt}          2 {c |}{res}      7,275       34.64       95.97
+{txt}          3 {c |}{res}        847        4.03      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     21,004      100.00
+{txt}
+{com}. 
+. 
+. svyset PSU [pweight=sampling_weight], strata(STRATUM) vce(linearized) singleunit(missing)
+
+{txt}Sampling weights:{col 19}{res}sampling_weight
+             {txt}VCE:{col 19}{res}linearized
+     {txt}Single unit:{col 19}{res}missing
+        {txt}Strata 1:{col 19}{res}STRATUM
+ {txt}Sampling unit 1:{col 19}{res}PSU
+           {txt}FPC 1:{col 19}<zero>
+{p2colreset}{...}
+
+{com}. 
+. 
+. stset TIMEyears [pweight=sampling_weight], id(ID) failure(DIED==1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}ID
+{col 10}{txt}Failure event: {res}DIED==1
+{col 1}{txt}Observed time interval: {res}(TIMEyears[_n-1], TIMEyears]
+{col 6}{txt}Exit on or before: {res}failure
+{col 17}{txt}Weight: {res}[pweight=sampling_weight]
+
+{txt}{hline 74}
+{res}     21,005{txt}  total observations
+{res}          1{txt}  ignored because ID missing
+{res}     10,445{txt}  event time missing (TIMEyears>=.){col 61}PROBABLE ERROR
+{res}          1{txt}  observation ends on or before {bf:enter()}
+{res}      8,026{txt}  weights invalid {col 61}PROBABLE ERROR
+{hline 74}
+{res}      2,532{txt}  observations remaining, representing
+{res}      2,532{txt}  subjects
+{res}      1,361{txt}  failures in single-failure-per-subject data
+{res} 35,399.583{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res}        0
+                                          {txt}Last observed exit t = {res}    20.75
+{txt}
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_SMALLfin",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_SMALLfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. **HRS**
+. clear
+{txt}
+{com}. clear matrix
+{txt}
+{com}. clear mata
+{txt}
+{com}. set maxvar 30000
+
+{txt}
+{com}. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin",clear
+{txt}
+{com}. 
+. capture drop COHORT
+{txt}
+{com}. gen COHORT=2
+{txt}
+{com}. 
+. 
+. capture drop zses
+{txt}
+{com}. egen zses=std(ses) if sample_final==1
+{txt}(45,389 missing values generated)
+
+{com}. 
+. keep HHIDPN _st _d _t _t0 COHORT sample_final AGE SEX RACE_ETHN invmillsfin time_event ageenter ageevent doexit died zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm  HORVATH_DNAMAGE_no_outliersEAA HANNUM_DNAMAGE_no_outliersEAA LEVINE_DNAMAGE_no_outliersEAA DNAMGRIMAGE_no_outliersEAA MPOA_no_outliers HORVATH_DNAMAGE_no_outliers HANNUM_DNAMAGE_no_outliers LEVINE_DNAMAGE_no_outliers DNAMGRIMAGE_no_outliers MPOA_no_outliers vbsi16wgtra  ses  zses hei2015_total_score  stratum secu *tert fried* frail*
+{txt}
+{com}. 
+. capture drop frailty_status
+{txt}
+{com}. gen frailty_status=fried_status
+{txt}(42,130 missing values generated)
+
+{com}. replace frailty_status=0 if fried_status==1
+{txt}(2,695 real changes made)
+
+{com}. replace frailty_status=1 if fried_status==2
+{txt}(1,122 real changes made)
+
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture drop ID
+{txt}
+{com}. gen ID=HHIDPN
+{txt}
+{com}. 
+. 
+. capture rename died DIED
+{txt}
+{com}. 
+. capture rename HORVATH_DNAMAGE_no_outliersEAA HorvathAgeEAA_no_outliers
+{txt}
+{com}. capture rename HANNUM_DNAMAGE_no_outliersEAA HannumAgeEAA_no_outliers
+{txt}
+{com}. capture rename LEVINE_DNAMAGE_no_outliersEAA PhenoAgeEAA_no_outliers
+{txt}
+{com}. capture rename DNAMGRIMAGE_no_outliersEAA GrimAgeMortEAA_no_outliers
+{txt}
+{com}. capture rename MPOA_no_outliers DunedinPoAm_no_outliers
+{txt}
+{com}. 
+. capture drop HORVATH_DNAMAGE_no_outliers DNAMGRIMAGE_no_outliers HANNUM_DNAMAGE_no_outliers LEVINE_DNAMAGE_no_outliers
+{txt}
+{com}. 
+. capture rename secu PSU
+{txt}
+{com}. capture rename stratum STRATUM
+{txt}
+{com}. 
+. 
+. capture drop ageenter ageevent doexit 
+{txt}
+{com}. 
+. capture rename time_event TIMEyears
+{txt}
+{com}. 
+. 
+. capture rename vbsi16wgtra sampling_weight
+{txt}
+{com}. 
+. capture drop HHIDPN
+{txt}
+{com}.  
+. tab RACE_ETHN
+
+  {txt}RACE_ETHN {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}     27,571       65.15       65.15
+{txt}          2 {c |}{res}      7,923       18.72       83.87
+{txt}          3 {c |}{res}      5,254       12.42       96.29
+{txt}          4 {c |}{res}      1,571        3.71      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     42,319      100.00
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. gen RACE=.
+{txt}(46,855 missing values generated)
+
+{com}. replace RACE=0 if RACE_ETHN==1
+{txt}(27,571 real changes made)
+
+{com}. replace RACE=1 if RACE_ETHN==2
+{txt}(7,923 real changes made)
+
+{com}. replace RACE=2 if RACE_ETHN==3
+{txt}(5,254 real changes made)
+
+{com}. replace RACE=3 if RACE_ETHN==4
+{txt}(1,571 real changes made)
+
+{com}. 
+. 
+. tab RACE
+
+       {txt}RACE {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}     27,571       65.15       65.15
+{txt}          1 {c |}{res}      7,923       18.72       83.87
+{txt}          2 {c |}{res}      5,254       12.42       96.29
+{txt}          3 {c |}{res}      1,571        3.71      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}     42,319      100.00
+{txt}
+{com}. 
+. 
+. 
+. svyset PSU [pweight=sampling_weight], strata(STRATUM) vce(linearized) singleunit(missing)
+
+{txt}Sampling weights:{col 19}{res}sampling_weight
+             {txt}VCE:{col 19}{res}linearized
+     {txt}Single unit:{col 19}{res}missing
+        {txt}Strata 1:{col 19}{res}STRATUM
+ {txt}Sampling unit 1:{col 19}{res}PSU
+           {txt}FPC 1:{col 19}<zero>
+{p2colreset}{...}
+
+{com}. 
+. 
+. stset TIMEyears [pweight=sampling_weight], id(ID) failure(DIED==1)
+
+{txt}Survival-time data settings
+
+{col 12}ID variable: {res}ID
+{col 10}{txt}Failure event: {res}DIED==1
+{col 1}{txt}Observed time interval: {res}(TIMEyears[_n-1], TIMEyears]
+{col 6}{txt}Exit on or before: {res}failure
+{col 17}{txt}Weight: {res}[pweight=sampling_weight]
+
+{txt}{hline 74}
+{res}     46,855{txt}  total observations
+{res}     45,391{txt}  event time missing (TIMEyears>=.){col 61}PROBABLE ERROR
+{res}         51{txt}  weights invalid {col 61}PROBABLE ERROR
+{hline 74}
+{res}      1,413{txt}  observations remaining, representing
+{res}      1,413{txt}  subjects
+{res}        275{txt}  failures in single-failure-per-subject data
+{res}  8,836.204{txt}  total analysis time at risk and under observation
+                                                At risk from t = {res}        0
+                                     {txt}Earliest observed entry t = {res}        0
+                                          {txt}Last observed exit t = {res} 7.677155
+{txt}
+{com}. 
+. 
+.  
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. 
+. 
+. **STEP 2: APPEND THE 2 COHORTS TOGETHER**
+. 
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_SMALLfin",clear
+{txt}
+{com}. 
+. append using "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\HRS\HRS_TLHEIFRAILEPIGENMORTfin_SMALL"
+{txt}
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\COMBINED\NHANES_HRS_DATACOMBINEDfin", replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\COMBINED\NHANES_HRS_DATACOMBINEDfin.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

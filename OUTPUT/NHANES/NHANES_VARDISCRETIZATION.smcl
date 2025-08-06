@@ -1,0 +1,905 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. 
+. 
+. //STEP 16: DISCRETIZE VARIABLES FOR ABN ANALYSIS AND GENERATE DATASET FOR R; CREATE A VARIABLE COHORT=1 (NHANES)//
+. 
+. use "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASETfin",clear
+{txt}
+{com}. 
+. keep if sample_final==1
+{txt}(19,468 observations deleted)
+
+{com}. 
+. keep seqn  AGE SEX RACE zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm frailty_status ses _st _d _t _t0 
+{txt}
+{com}. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. **AGE**
+. capture drop AGEbr
+{txt}
+{com}. xtile AGEbr = AGE, nq(100)
+{txt}
+{com}. bysort AGEbr: egen AGE_median = median(AGE)
+{txt}
+{com}. replace AGE_median = round(AGE_median, 0.01)
+{txt}(0 real changes made)
+
+{com}. replace AGE = AGE_median
+{txt}(16 real changes made)
+
+{com}. histogram AGE
+{txt}(bin={res}31{txt}, start={res}50{txt}, width={res}1.1290323{txt})
+{res}{txt}
+{com}. tab AGE
+
+        {txt}AGE {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+         50 {c |}{res}         16        1.04        1.04
+{txt}         51 {c |}{res}         17        1.11        2.15
+{txt}         52 {c |}{res}         20        1.30        3.45
+{txt}         54 {c |}{res}         18        1.17        4.62
+{txt}         55 {c |}{res}         13        0.85        5.47
+{txt}         56 {c |}{res}         17        1.11        6.57
+{txt}         57 {c |}{res}          9        0.59        7.16
+{txt}         58 {c |}{res}         18        1.17        8.33
+{txt}         60 {c |}{res}         85        5.53       13.86
+{txt}         61 {c |}{res}         75        4.88       18.74
+{txt}         62 {c |}{res}         90        5.86       24.59
+{txt}         63 {c |}{res}         70        4.55       29.15
+{txt}         64 {c |}{res}         70        4.55       33.70
+{txt}         65 {c |}{res}         69        4.49       38.19
+{txt}         66 {c |}{res}         69        4.49       42.68
+{txt}         67 {c |}{res}         63        4.10       46.78
+{txt}         68 {c |}{res}         63        4.10       50.88
+{txt}         69 {c |}{res}         51        3.32       54.20
+{txt}         70 {c |}{res}         73        4.75       58.95
+{txt}         71 {c |}{res}         62        4.03       62.98
+{txt}         72 {c |}{res}         53        3.45       66.43
+{txt}         73 {c |}{res}         57        3.71       70.14
+{txt}         74 {c |}{res}         46        2.99       73.13
+{txt}         75 {c |}{res}         44        2.86       75.99
+{txt}         76 {c |}{res}         41        2.67       78.66
+{txt}         77 {c |}{res}         33        2.15       80.81
+{txt}         78 {c |}{res}         28        1.82       82.63
+{txt}         79 {c |}{res}         25        1.63       84.26
+{txt}         80 {c |}{res}         46        2.99       87.25
+{txt}         81 {c |}{res}         44        2.86       90.11
+{txt}         82 {c |}{res}         37        2.41       92.52
+{txt}         83 {c |}{res}         13        0.85       93.36
+{txt}         84 {c |}{res}         26        1.69       95.06
+{txt}         85 {c |}{res}         76        4.94      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. **SEX***
+. tab SEX
+
+        {txt}SEX {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          1 {c |}{res}        770       50.10       50.10
+{txt}          2 {c |}{res}        767       49.90      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. recode SEX (1=0) (2=1)
+{txt}(1,537 changes made to {bf:SEX})
+
+{com}. 
+. tab SEX
+
+        {txt}SEX {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        770       50.10       50.10
+{txt}          1 {c |}{res}        767       49.90      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. 
+. **NonWhite RACES**
+. 
+. **Non-Hispanic Black**
+. 
+. capture drop NHB
+{txt}
+{com}. gen NHB=.
+{txt}(1,537 missing values generated)
+
+{com}. replace NHB=1 if RACE==1
+{txt}(308 real changes made)
+
+{com}. replace NHB=0 if RACE~=. & NHB~=1
+{txt}(1,229 real changes made)
+
+{com}. 
+. tab NHB
+
+        {txt}NHB {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,229       79.96       79.96
+{txt}          1 {c |}{res}        308       20.04      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. **Hispanic**
+. capture drop HISP
+{txt}
+{com}. gen HISP=.
+{txt}(1,537 missing values generated)
+
+{com}. replace HISP=1 if RACE==2
+{txt}(527 real changes made)
+
+{com}. replace HISP=0 if RACE~=. & HISP~=1
+{txt}(1,010 real changes made)
+
+{com}. 
+. tab HISP
+
+       {txt}HISP {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,010       65.71       65.71
+{txt}          1 {c |}{res}        527       34.29      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. **Other**
+. capture drop OTHER
+{txt}
+{com}. gen OTHER=.
+{txt}(1,537 missing values generated)
+
+{com}. replace OTHER=1 if RACE==3
+{txt}(50 real changes made)
+
+{com}. replace OTHER=0 if RACE~=. & OTHER~=1
+{txt}(1,487 real changes made)
+
+{com}. 
+. tab OTHER
+
+      {txt}OTHER {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}      1,487       96.75       96.75
+{txt}          1 {c |}{res}         50        3.25      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. 
+. 
+. *EPIGENETIC CLOCKS,SES AND HEI*
+. 
+. capture drop zz*
+{txt}
+{com}. foreach x of varlist zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm  ses    {c -(}
+{txt}  2{com}.         egen z`x'=std(`x')
+{txt}  3{com}. {c )-}
+{txt}
+{com}. 
+. capture rename zz* z*
+{txt}
+{com}. 
+. 
+. foreach x of varlist zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm  zses    {c -(}
+{txt}  2{com}. capture drop `x'br
+{txt}  3{com}. xtile `x'br = `x', nq(100)
+{txt}  4{com}. bysort `x'br: egen `x'_median = median(`x')
+{txt}  5{com}. replace `x'_median = round(`x'_median, 0.01)
+{txt}  6{com}. replace `x' = `x'_median
+{txt}  7{com}. histogram `x' 
+{txt}  8{com}. tab `x'
+{txt}  9{com}. 
+. {c )-}
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-3.54{txt}, width={res}.2132258{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+HorvathAgeE {c |}
+         AA {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+      -3.54 {c |}{res}         16        1.04        1.04
+{txt}      -2.09 {c |}{res}         15        0.98        2.02
+{txt}      -1.77 {c |}{res}         16        1.04        3.06
+{txt}      -1.52 {c |}{res}         15        0.98        4.03
+{txt}      -1.37 {c |}{res}         15        0.98        5.01
+{txt}      -1.27 {c |}{res}         16        1.04        6.05
+{txt}      -1.24 {c |}{res}         15        0.98        7.03
+{txt}      -1.15 {c |}{res}         15        0.98        8.00
+{txt}      -1.09 {c |}{res}         16        1.04        9.04
+{txt}      -1.05 {c |}{res}         15        0.98       10.02
+{txt}      -1.01 {c |}{res}         16        1.04       11.06
+{txt}       -.97 {c |}{res}         15        0.98       12.04
+{txt}       -.93 {c |}{res}         15        0.98       13.01
+{txt}       -.88 {c |}{res}         16        1.04       14.05
+{txt}       -.83 {c |}{res}         15        0.98       15.03
+{txt}        -.8 {c |}{res}         15        0.98       16.01
+{txt}       -.76 {c |}{res}         16        1.04       17.05
+{txt}       -.72 {c |}{res}         15        0.98       18.02
+{txt}       -.69 {c |}{res}         16        1.04       19.06
+{txt}       -.67 {c |}{res}         15        0.98       20.04
+{txt}       -.64 {c |}{res}         15        0.98       21.01
+{txt}       -.63 {c |}{res}         16        1.04       22.06
+{txt}        -.6 {c |}{res}         15        0.98       23.03
+{txt}       -.57 {c |}{res}         15        0.98       24.01
+{txt}       -.54 {c |}{res}         16        1.04       25.05
+{txt}       -.52 {c |}{res}         15        0.98       26.02
+{txt}        -.5 {c |}{res}         15        0.98       27.00
+{txt}       -.47 {c |}{res}         16        1.04       28.04
+{txt}       -.44 {c |}{res}         15        0.98       29.02
+{txt}       -.42 {c |}{res}         16        1.04       30.06
+{txt}       -.39 {c |}{res}         15        0.98       31.03
+{txt}       -.38 {c |}{res}         15        0.98       32.01
+{txt}       -.35 {c |}{res}         16        1.04       33.05
+{txt}       -.33 {c |}{res}         15        0.98       34.03
+{txt}       -.31 {c |}{res}         15        0.98       35.00
+{txt}       -.29 {c |}{res}         16        1.04       36.04
+{txt}       -.27 {c |}{res}         15        0.98       37.02
+{txt}       -.25 {c |}{res}         16        1.04       38.06
+{txt}       -.22 {c |}{res}         15        0.98       39.04
+{txt}        -.2 {c |}{res}         15        0.98       40.01
+{txt}       -.18 {c |}{res}         16        1.04       41.05
+{txt}       -.16 {c |}{res}         15        0.98       42.03
+{txt}       -.14 {c |}{res}         15        0.98       43.01
+{txt}       -.12 {c |}{res}         16        1.04       44.05
+{txt}        -.1 {c |}{res}         15        0.98       45.02
+{txt}       -.09 {c |}{res}         16        1.04       46.06
+{txt}       -.07 {c |}{res}         15        0.98       47.04
+{txt}       -.05 {c |}{res}         15        0.98       48.02
+{txt}       -.04 {c |}{res}         16        1.04       49.06
+{txt}       -.01 {c |}{res}         15        0.98       50.03
+{txt}        .02 {c |}{res}         15        0.98       51.01
+{txt}        .03 {c |}{res}         16        1.04       52.05
+{txt}        .05 {c |}{res}         15        0.98       53.03
+{txt}        .06 {c |}{res}         15        0.98       54.00
+{txt}        .08 {c |}{res}         16        1.04       55.04
+{txt}         .1 {c |}{res}         15        0.98       56.02
+{txt}        .11 {c |}{res}         16        1.04       57.06
+{txt}        .13 {c |}{res}         15        0.98       58.04
+{txt}        .14 {c |}{res}         15        0.98       59.01
+{txt}        .16 {c |}{res}         16        1.04       60.05
+{txt}        .19 {c |}{res}         15        0.98       61.03
+{txt}         .2 {c |}{res}         15        0.98       62.00
+{txt}        .22 {c |}{res}         16        1.04       63.04
+{txt}        .24 {c |}{res}         15        0.98       64.02
+{txt}        .26 {c |}{res}         16        1.04       65.06
+{txt}        .28 {c |}{res}         15        0.98       66.04
+{txt}         .3 {c |}{res}         15        0.98       67.01
+{txt}        .33 {c |}{res}         16        1.04       68.05
+{txt}        .36 {c |}{res}         15        0.98       69.03
+{txt}        .37 {c |}{res}         15        0.98       70.01
+{txt}         .4 {c |}{res}         16        1.04       71.05
+{txt}        .42 {c |}{res}         15        0.98       72.02
+{txt}        .45 {c |}{res}         16        1.04       73.06
+{txt}        .48 {c |}{res}         15        0.98       74.04
+{txt}        .49 {c |}{res}         15        0.98       75.02
+{txt}        .52 {c |}{res}         16        1.04       76.06
+{txt}        .55 {c |}{res}         15        0.98       77.03
+{txt}        .59 {c |}{res}         15        0.98       78.01
+{txt}        .62 {c |}{res}         16        1.04       79.05
+{txt}        .65 {c |}{res}         15        0.98       80.03
+{txt}        .66 {c |}{res}         15        0.98       81.00
+{txt}        .69 {c |}{res}         16        1.04       82.04
+{txt}        .74 {c |}{res}         15        0.98       83.02
+{txt}        .78 {c |}{res}         16        1.04       84.06
+{txt}        .82 {c |}{res}         15        0.98       85.04
+{txt}        .86 {c |}{res}         15        0.98       86.01
+{txt}        .91 {c |}{res}         16        1.04       87.05
+{txt}        .95 {c |}{res}         15        0.98       88.03
+{txt}          1 {c |}{res}         15        0.98       89.00
+{txt}       1.09 {c |}{res}         16        1.04       90.05
+{txt}       1.15 {c |}{res}         15        0.98       91.02
+{txt}        1.2 {c |}{res}         16        1.04       92.06
+{txt}       1.27 {c |}{res}         15        0.98       93.04
+{txt}       1.33 {c |}{res}         15        0.98       94.01
+{txt}       1.48 {c |}{res}         16        1.04       95.06
+{txt}       1.57 {c |}{res}         15        0.98       96.03
+{txt}       1.76 {c |}{res}         15        0.98       97.01
+{txt}          2 {c |}{res}         16        1.04       98.05
+{txt}       2.34 {c |}{res}         15        0.98       99.02
+{txt}       3.07 {c |}{res}         15        0.98      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-3.5999999{txt}, width={res}.20903226{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+HannumAgeEA {c |}
+          A {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+       -3.6 {c |}{res}         16        1.04        1.04
+{txt}      -2.15 {c |}{res}         15        0.98        2.02
+{txt}      -1.77 {c |}{res}         16        1.04        3.06
+{txt}      -1.61 {c |}{res}         15        0.98        4.03
+{txt}      -1.49 {c |}{res}         15        0.98        5.01
+{txt}      -1.35 {c |}{res}         16        1.04        6.05
+{txt}       -1.3 {c |}{res}         15        0.98        7.03
+{txt}      -1.24 {c |}{res}         15        0.98        8.00
+{txt}      -1.15 {c |}{res}         16        1.04        9.04
+{txt}      -1.07 {c |}{res}         15        0.98       10.02
+{txt}      -1.01 {c |}{res}         16        1.04       11.06
+{txt}       -.98 {c |}{res}         16        1.04       12.10
+{txt}       -.93 {c |}{res}         14        0.91       13.01
+{txt}       -.89 {c |}{res}         16        1.04       14.05
+{txt}       -.84 {c |}{res}         15        0.98       15.03
+{txt}       -.81 {c |}{res}         15        0.98       16.01
+{txt}       -.79 {c |}{res}         16        1.04       17.05
+{txt}       -.76 {c |}{res}         15        0.98       18.02
+{txt}       -.71 {c |}{res}         16        1.04       19.06
+{txt}       -.67 {c |}{res}         15        0.98       20.04
+{txt}       -.64 {c |}{res}         15        0.98       21.01
+{txt}       -.62 {c |}{res}         16        1.04       22.06
+{txt}       -.59 {c |}{res}         15        0.98       23.03
+{txt}       -.55 {c |}{res}         15        0.98       24.01
+{txt}       -.52 {c |}{res}         16        1.04       25.05
+{txt}        -.5 {c |}{res}         15        0.98       26.02
+{txt}       -.48 {c |}{res}         15        0.98       27.00
+{txt}       -.46 {c |}{res}         16        1.04       28.04
+{txt}       -.44 {c |}{res}         15        0.98       29.02
+{txt}       -.41 {c |}{res}         16        1.04       30.06
+{txt}       -.37 {c |}{res}         15        0.98       31.03
+{txt}       -.35 {c |}{res}         15        0.98       32.01
+{txt}       -.33 {c |}{res}         16        1.04       33.05
+{txt}       -.31 {c |}{res}         15        0.98       34.03
+{txt}       -.29 {c |}{res}         15        0.98       35.00
+{txt}       -.27 {c |}{res}         16        1.04       36.04
+{txt}       -.24 {c |}{res}         15        0.98       37.02
+{txt}       -.22 {c |}{res}         16        1.04       38.06
+{txt}       -.19 {c |}{res}         15        0.98       39.04
+{txt}       -.18 {c |}{res}         15        0.98       40.01
+{txt}       -.16 {c |}{res}         16        1.04       41.05
+{txt}       -.14 {c |}{res}         15        0.98       42.03
+{txt}       -.12 {c |}{res}         15        0.98       43.01
+{txt}       -.11 {c |}{res}         16        1.04       44.05
+{txt}       -.09 {c |}{res}         15        0.98       45.02
+{txt}       -.06 {c |}{res}         16        1.04       46.06
+{txt}       -.04 {c |}{res}         15        0.98       47.04
+{txt}       -.02 {c |}{res}         15        0.98       48.02
+{txt}       -.01 {c |}{res}         16        1.04       49.06
+{txt}        .01 {c |}{res}         15        0.98       50.03
+{txt}        .04 {c |}{res}         15        0.98       51.01
+{txt}        .06 {c |}{res}         16        1.04       52.05
+{txt}        .08 {c |}{res}         15        0.98       53.03
+{txt}         .1 {c |}{res}         15        0.98       54.00
+{txt}        .11 {c |}{res}         16        1.04       55.04
+{txt}        .14 {c |}{res}         15        0.98       56.02
+{txt}        .16 {c |}{res}         16        1.04       57.06
+{txt}        .17 {c |}{res}         15        0.98       58.04
+{txt}        .19 {c |}{res}         15        0.98       59.01
+{txt}        .22 {c |}{res}         16        1.04       60.05
+{txt}        .24 {c |}{res}         15        0.98       61.03
+{txt}        .26 {c |}{res}         15        0.98       62.00
+{txt}        .28 {c |}{res}         16        1.04       63.04
+{txt}         .3 {c |}{res}         15        0.98       64.02
+{txt}        .32 {c |}{res}         16        1.04       65.06
+{txt}        .35 {c |}{res}         15        0.98       66.04
+{txt}        .36 {c |}{res}         15        0.98       67.01
+{txt}        .39 {c |}{res}         16        1.04       68.05
+{txt}        .41 {c |}{res}         15        0.98       69.03
+{txt}        .42 {c |}{res}         15        0.98       70.01
+{txt}        .44 {c |}{res}         16        1.04       71.05
+{txt}        .46 {c |}{res}         15        0.98       72.02
+{txt}        .48 {c |}{res}         16        1.04       73.06
+{txt}         .5 {c |}{res}         15        0.98       74.04
+{txt}        .53 {c |}{res}         15        0.98       75.02
+{txt}        .56 {c |}{res}         16        1.04       76.06
+{txt}        .58 {c |}{res}         15        0.98       77.03
+{txt}        .61 {c |}{res}         15        0.98       78.01
+{txt}        .63 {c |}{res}         16        1.04       79.05
+{txt}        .67 {c |}{res}         15        0.98       80.03
+{txt}        .69 {c |}{res}         15        0.98       81.00
+{txt}        .73 {c |}{res}         16        1.04       82.04
+{txt}        .75 {c |}{res}         15        0.98       83.02
+{txt}        .77 {c |}{res}         16        1.04       84.06
+{txt}        .81 {c |}{res}         15        0.98       85.04
+{txt}        .85 {c |}{res}         15        0.98       86.01
+{txt}        .88 {c |}{res}         16        1.04       87.05
+{txt}        .92 {c |}{res}         15        0.98       88.03
+{txt}        .98 {c |}{res}         15        0.98       89.00
+{txt}       1.01 {c |}{res}         16        1.04       90.05
+{txt}       1.11 {c |}{res}         15        0.98       91.02
+{txt}       1.17 {c |}{res}         16        1.04       92.06
+{txt}       1.26 {c |}{res}         15        0.98       93.04
+{txt}        1.3 {c |}{res}         15        0.98       94.01
+{txt}       1.37 {c |}{res}         16        1.04       95.06
+{txt}       1.51 {c |}{res}         15        0.98       96.03
+{txt}       1.71 {c |}{res}         15        0.98       97.01
+{txt}       1.89 {c |}{res}         16        1.04       98.05
+{txt}       2.11 {c |}{res}         15        0.98       99.02
+{txt}       2.88 {c |}{res}         15        0.98      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-3.3199999{txt}, width={res}.19129032{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+PhenoAgeEAA {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+      -3.32 {c |}{res}         16        1.04        1.04
+{txt}      -2.13 {c |}{res}         15        0.98        2.02
+{txt}      -1.78 {c |}{res}         16        1.04        3.06
+{txt}      -1.59 {c |}{res}         15        0.98        4.03
+{txt}      -1.49 {c |}{res}         15        0.98        5.01
+{txt}       -1.4 {c |}{res}         16        1.04        6.05
+{txt}      -1.31 {c |}{res}         15        0.98        7.03
+{txt}      -1.23 {c |}{res}         15        0.98        8.00
+{txt}      -1.18 {c |}{res}         16        1.04        9.04
+{txt}      -1.13 {c |}{res}         15        0.98       10.02
+{txt}      -1.09 {c |}{res}         16        1.04       11.06
+{txt}      -1.04 {c |}{res}         15        0.98       12.04
+{txt}         -1 {c |}{res}         15        0.98       13.01
+{txt}       -.95 {c |}{res}         16        1.04       14.05
+{txt}       -.93 {c |}{res}         15        0.98       15.03
+{txt}       -.91 {c |}{res}         15        0.98       16.01
+{txt}       -.87 {c |}{res}         16        1.04       17.05
+{txt}       -.84 {c |}{res}         15        0.98       18.02
+{txt}       -.79 {c |}{res}         16        1.04       19.06
+{txt}       -.76 {c |}{res}         15        0.98       20.04
+{txt}       -.72 {c |}{res}         15        0.98       21.01
+{txt}       -.69 {c |}{res}         16        1.04       22.06
+{txt}       -.66 {c |}{res}         15        0.98       23.03
+{txt}       -.62 {c |}{res}         15        0.98       24.01
+{txt}       -.59 {c |}{res}         16        1.04       25.05
+{txt}       -.56 {c |}{res}         15        0.98       26.02
+{txt}       -.54 {c |}{res}         15        0.98       27.00
+{txt}       -.52 {c |}{res}         16        1.04       28.04
+{txt}        -.5 {c |}{res}         15        0.98       29.02
+{txt}       -.47 {c |}{res}         16        1.04       30.06
+{txt}       -.45 {c |}{res}         15        0.98       31.03
+{txt}       -.43 {c |}{res}         15        0.98       32.01
+{txt}       -.41 {c |}{res}         16        1.04       33.05
+{txt}       -.39 {c |}{res}         15        0.98       34.03
+{txt}       -.36 {c |}{res}         15        0.98       35.00
+{txt}       -.34 {c |}{res}         16        1.04       36.04
+{txt}       -.31 {c |}{res}         15        0.98       37.02
+{txt}       -.29 {c |}{res}         16        1.04       38.06
+{txt}       -.27 {c |}{res}         15        0.98       39.04
+{txt}       -.25 {c |}{res}         15        0.98       40.01
+{txt}       -.22 {c |}{res}         16        1.04       41.05
+{txt}        -.2 {c |}{res}         15        0.98       42.03
+{txt}       -.17 {c |}{res}         15        0.98       43.01
+{txt}       -.14 {c |}{res}         16        1.04       44.05
+{txt}       -.12 {c |}{res}         15        0.98       45.02
+{txt}        -.1 {c |}{res}         16        1.04       46.06
+{txt}       -.08 {c |}{res}         15        0.98       47.04
+{txt}       -.06 {c |}{res}         15        0.98       48.02
+{txt}       -.04 {c |}{res}         16        1.04       49.06
+{txt}       -.02 {c |}{res}         15        0.98       50.03
+{txt}        .01 {c |}{res}         15        0.98       51.01
+{txt}        .04 {c |}{res}         16        1.04       52.05
+{txt}        .05 {c |}{res}         15        0.98       53.03
+{txt}        .08 {c |}{res}         15        0.98       54.00
+{txt}        .09 {c |}{res}         16        1.04       55.04
+{txt}        .12 {c |}{res}         15        0.98       56.02
+{txt}        .14 {c |}{res}         16        1.04       57.06
+{txt}        .16 {c |}{res}         15        0.98       58.04
+{txt}        .18 {c |}{res}         15        0.98       59.01
+{txt}         .2 {c |}{res}         16        1.04       60.05
+{txt}        .22 {c |}{res}         15        0.98       61.03
+{txt}        .25 {c |}{res}         15        0.98       62.00
+{txt}        .27 {c |}{res}         16        1.04       63.04
+{txt}        .29 {c |}{res}         15        0.98       64.02
+{txt}        .32 {c |}{res}         16        1.04       65.06
+{txt}        .34 {c |}{res}         15        0.98       66.04
+{txt}        .36 {c |}{res}         15        0.98       67.01
+{txt}        .38 {c |}{res}         16        1.04       68.05
+{txt}        .41 {c |}{res}         15        0.98       69.03
+{txt}        .44 {c |}{res}         15        0.98       70.01
+{txt}        .46 {c |}{res}         16        1.04       71.05
+{txt}        .49 {c |}{res}         15        0.98       72.02
+{txt}        .52 {c |}{res}         16        1.04       73.06
+{txt}        .54 {c |}{res}         15        0.98       74.04
+{txt}        .56 {c |}{res}         15        0.98       75.02
+{txt}        .59 {c |}{res}         16        1.04       76.06
+{txt}        .62 {c |}{res}         15        0.98       77.03
+{txt}        .66 {c |}{res}         15        0.98       78.01
+{txt}        .69 {c |}{res}         16        1.04       79.05
+{txt}        .72 {c |}{res}         15        0.98       80.03
+{txt}        .77 {c |}{res}         15        0.98       81.00
+{txt}        .82 {c |}{res}         16        1.04       82.04
+{txt}        .86 {c |}{res}         15        0.98       83.02
+{txt}         .9 {c |}{res}         16        1.04       84.06
+{txt}        .92 {c |}{res}         15        0.98       85.04
+{txt}        .96 {c |}{res}         15        0.98       86.01
+{txt}       1.02 {c |}{res}         16        1.04       87.05
+{txt}       1.05 {c |}{res}         15        0.98       88.03
+{txt}       1.11 {c |}{res}         15        0.98       89.00
+{txt}       1.15 {c |}{res}         16        1.04       90.05
+{txt}       1.21 {c |}{res}         15        0.98       91.02
+{txt}       1.26 {c |}{res}         16        1.04       92.06
+{txt}       1.34 {c |}{res}         15        0.98       93.04
+{txt}       1.42 {c |}{res}         15        0.98       94.01
+{txt}       1.52 {c |}{res}         16        1.04       95.06
+{txt}       1.63 {c |}{res}         15        0.98       96.03
+{txt}       1.75 {c |}{res}         15        0.98       97.01
+{txt}       1.94 {c |}{res}         16        1.04       98.05
+{txt}       2.15 {c |}{res}         15        0.98       99.02
+{txt}       2.61 {c |}{res}         15        0.98      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-1.92{txt}, width={res}.16{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+GrimAgeMort {c |}
+        EAA {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+      -1.92 {c |}{res}         16        1.04        1.04
+{txt}      -1.68 {c |}{res}         15        0.98        2.02
+{txt}      -1.53 {c |}{res}         16        1.04        3.06
+{txt}      -1.45 {c |}{res}         15        0.98        4.03
+{txt}       -1.4 {c |}{res}         15        0.98        5.01
+{txt}      -1.35 {c |}{res}         16        1.04        6.05
+{txt}      -1.28 {c |}{res}         15        0.98        7.03
+{txt}      -1.23 {c |}{res}         15        0.98        8.00
+{txt}      -1.18 {c |}{res}         16        1.04        9.04
+{txt}      -1.16 {c |}{res}         15        0.98       10.02
+{txt}      -1.13 {c |}{res}         16        1.04       11.06
+{txt}      -1.08 {c |}{res}         15        0.98       12.04
+{txt}      -1.04 {c |}{res}         15        0.98       13.01
+{txt}      -1.01 {c |}{res}         16        1.04       14.05
+{txt}       -.97 {c |}{res}         15        0.98       15.03
+{txt}       -.95 {c |}{res}         15        0.98       16.01
+{txt}       -.91 {c |}{res}         16        1.04       17.05
+{txt}       -.89 {c |}{res}         15        0.98       18.02
+{txt}       -.88 {c |}{res}         16        1.04       19.06
+{txt}       -.85 {c |}{res}         15        0.98       20.04
+{txt}       -.82 {c |}{res}         15        0.98       21.01
+{txt}       -.81 {c |}{res}         16        1.04       22.06
+{txt}       -.78 {c |}{res}         15        0.98       23.03
+{txt}       -.76 {c |}{res}         15        0.98       24.01
+{txt}       -.73 {c |}{res}         16        1.04       25.05
+{txt}       -.71 {c |}{res}         15        0.98       26.02
+{txt}       -.69 {c |}{res}         15        0.98       27.00
+{txt}       -.68 {c |}{res}         16        1.04       28.04
+{txt}       -.65 {c |}{res}         15        0.98       29.02
+{txt}       -.62 {c |}{res}         16        1.04       30.06
+{txt}        -.6 {c |}{res}         15        0.98       31.03
+{txt}       -.58 {c |}{res}         15        0.98       32.01
+{txt}       -.55 {c |}{res}         16        1.04       33.05
+{txt}       -.52 {c |}{res}         15        0.98       34.03
+{txt}       -.51 {c |}{res}         15        0.98       35.00
+{txt}       -.48 {c |}{res}         16        1.04       36.04
+{txt}       -.46 {c |}{res}         15        0.98       37.02
+{txt}       -.44 {c |}{res}         16        1.04       38.06
+{txt}       -.41 {c |}{res}         15        0.98       39.04
+{txt}       -.39 {c |}{res}         15        0.98       40.01
+{txt}       -.38 {c |}{res}         16        1.04       41.05
+{txt}       -.36 {c |}{res}         15        0.98       42.03
+{txt}       -.34 {c |}{res}         15        0.98       43.01
+{txt}       -.33 {c |}{res}         16        1.04       44.05
+{txt}        -.3 {c |}{res}         15        0.98       45.02
+{txt}       -.28 {c |}{res}         16        1.04       46.06
+{txt}       -.26 {c |}{res}         15        0.98       47.04
+{txt}       -.23 {c |}{res}         15        0.98       48.02
+{txt}        -.2 {c |}{res}         16        1.04       49.06
+{txt}       -.17 {c |}{res}         15        0.98       50.03
+{txt}       -.15 {c |}{res}         15        0.98       51.01
+{txt}       -.13 {c |}{res}         16        1.04       52.05
+{txt}       -.11 {c |}{res}         15        0.98       53.03
+{txt}       -.09 {c |}{res}         15        0.98       54.00
+{txt}       -.05 {c |}{res}         16        1.04       55.04
+{txt}       -.03 {c |}{res}         15        0.98       56.02
+{txt}       -.01 {c |}{res}         16        1.04       57.06
+{txt}        .01 {c |}{res}         15        0.98       58.04
+{txt}        .03 {c |}{res}         15        0.98       59.01
+{txt}        .05 {c |}{res}         16        1.04       60.05
+{txt}        .07 {c |}{res}         15        0.98       61.03
+{txt}         .1 {c |}{res}         15        0.98       62.00
+{txt}        .13 {c |}{res}         16        1.04       63.04
+{txt}        .16 {c |}{res}         15        0.98       64.02
+{txt}        .19 {c |}{res}         16        1.04       65.06
+{txt}        .22 {c |}{res}         15        0.98       66.04
+{txt}        .24 {c |}{res}         15        0.98       67.01
+{txt}        .28 {c |}{res}         16        1.04       68.05
+{txt}        .31 {c |}{res}         15        0.98       69.03
+{txt}        .34 {c |}{res}         15        0.98       70.01
+{txt}        .37 {c |}{res}         16        1.04       71.05
+{txt}        .41 {c |}{res}         15        0.98       72.02
+{txt}        .45 {c |}{res}         16        1.04       73.06
+{txt}        .48 {c |}{res}         15        0.98       74.04
+{txt}        .51 {c |}{res}         15        0.98       75.02
+{txt}        .56 {c |}{res}         16        1.04       76.06
+{txt}        .59 {c |}{res}         15        0.98       77.03
+{txt}        .63 {c |}{res}         15        0.98       78.01
+{txt}        .66 {c |}{res}         16        1.04       79.05
+{txt}        .72 {c |}{res}         15        0.98       80.03
+{txt}        .78 {c |}{res}         15        0.98       81.00
+{txt}        .81 {c |}{res}         16        1.04       82.04
+{txt}        .85 {c |}{res}         15        0.98       83.02
+{txt}        .92 {c |}{res}         16        1.04       84.06
+{txt}        .97 {c |}{res}         15        0.98       85.04
+{txt}          1 {c |}{res}         15        0.98       86.01
+{txt}       1.04 {c |}{res}         16        1.04       87.05
+{txt}        1.1 {c |}{res}         15        0.98       88.03
+{txt}       1.17 {c |}{res}         15        0.98       89.00
+{txt}       1.25 {c |}{res}         16        1.04       90.05
+{txt}       1.34 {c |}{res}         15        0.98       91.02
+{txt}        1.4 {c |}{res}         16        1.04       92.06
+{txt}       1.49 {c |}{res}         15        0.98       93.04
+{txt}        1.6 {c |}{res}         15        0.98       94.01
+{txt}        1.7 {c |}{res}         16        1.04       95.06
+{txt}        1.8 {c |}{res}         15        0.98       96.03
+{txt}       1.95 {c |}{res}         15        0.98       97.01
+{txt}       2.18 {c |}{res}         16        1.04       98.05
+{txt}       2.55 {c |}{res}         15        0.98       99.02
+{txt}       3.04 {c |}{res}         15        0.98      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-2.1500001{txt}, width={res}.16129032{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+DunedinPoAm {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+      -2.15 {c |}{res}         16        1.04        1.04
+{txt}      -1.84 {c |}{res}         15        0.98        2.02
+{txt}      -1.68 {c |}{res}         16        1.04        3.06
+{txt}      -1.58 {c |}{res}         15        0.98        4.03
+{txt}      -1.48 {c |}{res}         15        0.98        5.01
+{txt}       -1.4 {c |}{res}         16        1.04        6.05
+{txt}      -1.33 {c |}{res}         15        0.98        7.03
+{txt}      -1.29 {c |}{res}         15        0.98        8.00
+{txt}      -1.23 {c |}{res}         16        1.04        9.04
+{txt}      -1.18 {c |}{res}         15        0.98       10.02
+{txt}      -1.15 {c |}{res}         16        1.04       11.06
+{txt}      -1.11 {c |}{res}         15        0.98       12.04
+{txt}      -1.05 {c |}{res}         15        0.98       13.01
+{txt}      -1.01 {c |}{res}         16        1.04       14.05
+{txt}       -.98 {c |}{res}         15        0.98       15.03
+{txt}       -.95 {c |}{res}         15        0.98       16.01
+{txt}       -.92 {c |}{res}         16        1.04       17.05
+{txt}       -.89 {c |}{res}         15        0.98       18.02
+{txt}       -.86 {c |}{res}         16        1.04       19.06
+{txt}       -.82 {c |}{res}         15        0.98       20.04
+{txt}       -.79 {c |}{res}         15        0.98       21.01
+{txt}       -.77 {c |}{res}         16        1.04       22.06
+{txt}       -.75 {c |}{res}         15        0.98       23.03
+{txt}       -.71 {c |}{res}         15        0.98       24.01
+{txt}        -.7 {c |}{res}         16        1.04       25.05
+{txt}       -.68 {c |}{res}         15        0.98       26.02
+{txt}       -.65 {c |}{res}         15        0.98       27.00
+{txt}       -.63 {c |}{res}         16        1.04       28.04
+{txt}        -.6 {c |}{res}         15        0.98       29.02
+{txt}       -.58 {c |}{res}         16        1.04       30.06
+{txt}       -.56 {c |}{res}         15        0.98       31.03
+{txt}       -.53 {c |}{res}         15        0.98       32.01
+{txt}       -.51 {c |}{res}         16        1.04       33.05
+{txt}       -.49 {c |}{res}         15        0.98       34.03
+{txt}       -.48 {c |}{res}         15        0.98       35.00
+{txt}       -.46 {c |}{res}         16        1.04       36.04
+{txt}       -.45 {c |}{res}         15        0.98       37.02
+{txt}       -.43 {c |}{res}         16        1.04       38.06
+{txt}        -.4 {c |}{res}         15        0.98       39.04
+{txt}       -.37 {c |}{res}         15        0.98       40.01
+{txt}       -.34 {c |}{res}         16        1.04       41.05
+{txt}       -.32 {c |}{res}         15        0.98       42.03
+{txt}       -.28 {c |}{res}         15        0.98       43.01
+{txt}       -.26 {c |}{res}         16        1.04       44.05
+{txt}       -.24 {c |}{res}         15        0.98       45.02
+{txt}       -.21 {c |}{res}         16        1.04       46.06
+{txt}       -.18 {c |}{res}         15        0.98       47.04
+{txt}       -.16 {c |}{res}         15        0.98       48.02
+{txt}       -.14 {c |}{res}         16        1.04       49.06
+{txt}       -.12 {c |}{res}         15        0.98       50.03
+{txt}        -.1 {c |}{res}         15        0.98       51.01
+{txt}       -.08 {c |}{res}         16        1.04       52.05
+{txt}       -.05 {c |}{res}         15        0.98       53.03
+{txt}       -.02 {c |}{res}         15        0.98       54.00
+{txt}        .01 {c |}{res}         16        1.04       55.04
+{txt}        .03 {c |}{res}         15        0.98       56.02
+{txt}        .05 {c |}{res}         16        1.04       57.06
+{txt}        .08 {c |}{res}         15        0.98       58.04
+{txt}        .11 {c |}{res}         15        0.98       59.01
+{txt}        .13 {c |}{res}         16        1.04       60.05
+{txt}        .16 {c |}{res}         15        0.98       61.03
+{txt}        .18 {c |}{res}         15        0.98       62.00
+{txt}         .2 {c |}{res}         16        1.04       63.04
+{txt}        .23 {c |}{res}         15        0.98       64.02
+{txt}        .25 {c |}{res}         16        1.04       65.06
+{txt}        .27 {c |}{res}         15        0.98       66.04
+{txt}        .29 {c |}{res}         15        0.98       67.01
+{txt}        .31 {c |}{res}         16        1.04       68.05
+{txt}        .34 {c |}{res}         15        0.98       69.03
+{txt}        .37 {c |}{res}         15        0.98       70.01
+{txt}         .4 {c |}{res}         16        1.04       71.05
+{txt}        .43 {c |}{res}         15        0.98       72.02
+{txt}        .46 {c |}{res}         16        1.04       73.06
+{txt}        .48 {c |}{res}         15        0.98       74.04
+{txt}        .54 {c |}{res}         15        0.98       75.02
+{txt}        .59 {c |}{res}         16        1.04       76.06
+{txt}        .64 {c |}{res}         15        0.98       77.03
+{txt}        .66 {c |}{res}         15        0.98       78.01
+{txt}        .69 {c |}{res}         16        1.04       79.05
+{txt}        .75 {c |}{res}         15        0.98       80.03
+{txt}        .81 {c |}{res}         15        0.98       81.00
+{txt}        .84 {c |}{res}         16        1.04       82.04
+{txt}        .88 {c |}{res}         15        0.98       83.02
+{txt}        .91 {c |}{res}         16        1.04       84.06
+{txt}        .96 {c |}{res}         15        0.98       85.04
+{txt}          1 {c |}{res}         15        0.98       86.01
+{txt}       1.08 {c |}{res}         16        1.04       87.05
+{txt}       1.14 {c |}{res}         15        0.98       88.03
+{txt}       1.19 {c |}{res}         15        0.98       89.00
+{txt}       1.24 {c |}{res}         16        1.04       90.05
+{txt}       1.29 {c |}{res}         15        0.98       91.02
+{txt}       1.36 {c |}{res}         16        1.04       92.06
+{txt}       1.47 {c |}{res}         15        0.98       93.04
+{txt}       1.53 {c |}{res}         15        0.98       94.01
+{txt}       1.62 {c |}{res}         16        1.04       95.06
+{txt}        1.8 {c |}{res}         15        0.98       96.03
+{txt}       1.94 {c |}{res}         15        0.98       97.01
+{txt}       2.18 {c |}{res}         16        1.04       98.05
+{txt}       2.47 {c |}{res}         15        0.98       99.02
+{txt}       2.85 {c |}{res}         15        0.98      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}(1,537 real changes made)
+(1,537 real changes made)
+(bin={res}31{txt}, start={res}-1.55{txt}, width={res}.12451613{txt})
+{res}
+{txt}Standardize {c |}
+d values of {c |}
+        ses {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+      -1.55 {c |}{res}         16        1.04        1.04
+{txt}      -1.42 {c |}{res}         15        0.98        2.02
+{txt}      -1.38 {c |}{res}         17        1.11        3.12
+{txt}      -1.35 {c |}{res}         14        0.91        4.03
+{txt}      -1.34 {c |}{res}         15        0.98        5.01
+{txt}      -1.32 {c |}{res}         16        1.04        6.05
+{txt}       -1.3 {c |}{res}         15        0.98        7.03
+{txt}      -1.27 {c |}{res}         23        1.50        8.52
+{txt}      -1.26 {c |}{res}         10        0.65        9.17
+{txt}      -1.24 {c |}{res}         14        0.91       10.08
+{txt}      -1.23 {c |}{res}         15        0.98       11.06
+{txt}      -1.22 {c |}{res}         19        1.24       12.30
+{txt}       -1.2 {c |}{res}         12        0.78       13.08
+{txt}      -1.18 {c |}{res}         16        1.04       14.12
+{txt}      -1.16 {c |}{res}         21        1.37       15.48
+{txt}      -1.15 {c |}{res}         10        0.65       16.14
+{txt}      -1.13 {c |}{res}         14        0.91       17.05
+{txt}       -1.1 {c |}{res}         15        0.98       18.02
+{txt}      -1.07 {c |}{res}         17        1.11       19.13
+{txt}      -1.02 {c |}{res}         14        0.91       20.04
+{txt}         -1 {c |}{res}         18        1.17       21.21
+{txt}       -.96 {c |}{res}         15        0.98       22.19
+{txt}       -.95 {c |}{res}         13        0.85       23.03
+{txt}       -.93 {c |}{res}         15        0.98       24.01
+{txt}        -.9 {c |}{res}         16        1.04       25.05
+{txt}       -.86 {c |}{res}         16        1.04       26.09
+{txt}       -.83 {c |}{res}         14        0.91       27.00
+{txt}        -.8 {c |}{res}         18        1.17       28.17
+{txt}       -.78 {c |}{res}         14        0.91       29.08
+{txt}       -.76 {c |}{res}         15        0.98       30.06
+{txt}       -.74 {c |}{res}         20        1.30       31.36
+{txt}       -.72 {c |}{res}         11        0.72       32.08
+{txt}       -.71 {c |}{res}         15        0.98       33.05
+{txt}       -.67 {c |}{res}         17        1.11       34.16
+{txt}       -.63 {c |}{res}         14        0.91       35.07
+{txt}        -.6 {c |}{res}         15        0.98       36.04
+{txt}       -.57 {c |}{res}         15        0.98       37.02
+{txt}       -.54 {c |}{res}         16        1.04       38.06
+{txt}        -.5 {c |}{res}         16        1.04       39.10
+{txt}       -.47 {c |}{res}         14        0.91       40.01
+{txt}       -.42 {c |}{res}         16        1.04       41.05
+{txt}       -.38 {c |}{res}         16        1.04       42.09
+{txt}       -.36 {c |}{res}         14        0.91       43.01
+{txt}       -.34 {c |}{res}         16        1.04       44.05
+{txt}       -.31 {c |}{res}         15        0.98       45.02
+{txt}       -.28 {c |}{res}         16        1.04       46.06
+{txt}       -.24 {c |}{res}         15        0.98       47.04
+{txt}       -.18 {c |}{res}         15        0.98       48.02
+{txt}       -.12 {c |}{res}         16        1.04       49.06
+{txt}       -.09 {c |}{res}         18        1.17       50.23
+{txt}       -.07 {c |}{res}         12        0.78       51.01
+{txt}       -.05 {c |}{res}         16        1.04       52.05
+{txt}       -.02 {c |}{res}         15        0.98       53.03
+{txt}          0 {c |}{res}         16        1.04       54.07
+{txt}        .02 {c |}{res}         17        1.11       55.17
+{txt}        .06 {c |}{res}         13        0.85       56.02
+{txt}         .1 {c |}{res}         16        1.04       57.06
+{txt}        .13 {c |}{res}         17        1.11       58.17
+{txt}        .15 {c |}{res}         13        0.85       59.01
+{txt}        .17 {c |}{res}         16        1.04       60.05
+{txt}        .22 {c |}{res}         15        0.98       61.03
+{txt}        .24 {c |}{res}         17        1.11       62.13
+{txt}        .29 {c |}{res}         15        0.98       63.11
+{txt}        .33 {c |}{res}         14        0.91       64.02
+{txt}        .36 {c |}{res}         16        1.04       65.06
+{txt}        .42 {c |}{res}         15        0.98       66.04
+{txt}        .44 {c |}{res}         17        1.11       67.14
+{txt}        .48 {c |}{res}         14        0.91       68.05
+{txt}        .53 {c |}{res}         17        1.11       69.16
+{txt}        .58 {c |}{res}         25        1.63       70.79
+{txt}         .6 {c |}{res}          4        0.26       71.05
+{txt}        .63 {c |}{res}         16        1.04       72.09
+{txt}        .68 {c |}{res}         16        1.04       73.13
+{txt}        .71 {c |}{res}         14        0.91       74.04
+{txt}        .75 {c |}{res}         15        0.98       75.02
+{txt}         .8 {c |}{res}         16        1.04       76.06
+{txt}        .86 {c |}{res}         15        0.98       77.03
+{txt}        .92 {c |}{res}         15        0.98       78.01
+{txt}          1 {c |}{res}         50        3.25       81.26
+{txt}       1.05 {c |}{res}         12        0.78       82.04
+{txt}       1.11 {c |}{res}         15        0.98       83.02
+{txt}       1.19 {c |}{res}         16        1.04       84.06
+{txt}       1.29 {c |}{res}         15        0.98       85.04
+{txt}       1.42 {c |}{res}         83        5.40       90.44
+{txt}       1.46 {c |}{res}          9        0.59       91.02
+{txt}       1.64 {c |}{res}         16        1.04       92.06
+{txt}       1.83 {c |}{res}        121        7.87       99.93
+{txt}       2.31 {c |}{res}          1        0.07      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. *MORTALITY*
+. tab _d
+
+       {txt}1 if {c |}
+ failure; 0 {c |}
+if censored {c |}      Freq.     Percent        Cum.
+{hline 12}{c +}{hline 35}
+          0 {c |}{res}        615       40.01       40.01
+{txt}          1 {c |}{res}        922       59.99      100.00
+{txt}{hline 12}{c +}{hline 35}
+      Total {c |}{res}      1,537      100.00
+{txt}
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. capture drop COHORT
+{txt}
+{com}. gen COHORT=1
+{txt}
+{com}. 
+. keep seqn AGE SEX NHB HISP OTHER zHorvathAgeEAA zHannumAgeEAA zPhenoAgeEAA zGrimAgeMortEAA zDunedinPoAm frailty_status zses  _d _st _d _t _t0 COHORT
+{txt}
+{com}. 
+. 
+. save "E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN_SMALL",replace
+{txt}{p 0 4 2}
+file {bf}
+E:\16GBBACKUPUSB\BACKUP_USB_SEPTEMBER2014\SUMMER_STUDENT_2025\HRS_NHANES_HANDLS_FRAILTY_EPICLOCKS_MORT\FINAL_DATA\NHANES\NHANES_MERGED_DATASET_ABN_SMALL.dta{rm}
+saved
+{p_end}
+
+{com}. 
+. 
+. 
+. capture log close
+{smcl}
+{com}{sf}{ul off}

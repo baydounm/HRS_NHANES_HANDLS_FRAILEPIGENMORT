@@ -1,6 +1,6 @@
 # HRS_NHANES_HANDLS_FRAILEPIGENMORT
 
-The following repository contains code, Output and Figures from the published manuscript in the journal BMC Medicine: 
+The following repository contains code, Output and Figures from manuscript Under Review in the journal BMC Medicine: 
 
 From Frailty to Mortality: Exploring Epigenetic Aging as a Biological Pathway among U.S. Adults
 

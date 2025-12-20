@@ -8,12 +8,3 @@ May A. Beydoun1,†; Nicole Noren Hooten1; Nicolle Mode1; Hind A. Beydoun2,3; Mi
 
 #Co-senior authors
 
-
-1 Laboratory of Epidemiology and Population Sciences, National Institute on Aging, NIA/NIH/IRP, Baltimore, MD, 21224,USA
-
-
-2 VA National Center on Homelessness Among Veterans, U.S. Department of Veterans Affairs, Washington, DC, 20420,USA
-3 Department of Management, Policy, and Community Health, School of Public Health, University of Texas Health Science Center at Houston, Houston, TX, 77030,USA
-
-† Performed statistical analyses. 
-

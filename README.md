@@ -6,5 +6,8 @@ From Frailty to Mortality: Exploring Epigenetic Aging as a Biological Pathway am
 
 May A. Beydoun1,†; Nicole Noren Hooten1; Nicolle Mode1; Hind A. Beydoun2,3; Michael F. Georgescu1; Jack Tsai2,3; Michele K. Evans1,#; Alan B. Zonderman1,#
 
-#Co-senior authors
+
+The SYNTAX folder contains code used in NHANES, HRS and HANDLS separately as well as the combined/appended files that were used to run GSEM among others. It also includes code for ABN in HRS and NHANES, and R code for generating Figure 3 in R. Stata do files include the ABN code in R and also some R code for generating Figure S2. 
+
+The OUTPUT.zip folder contains all Output in txt, smcl, csv, pdf and other formats, used for main and supplementary Tables and Figures. 
 

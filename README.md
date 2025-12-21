@@ -11,3 +11,5 @@ The SYNTAX folder contains code used in NHANES, HRS and HANDLS separately as wel
 
 The OUTPUT.zip folder contains all Output in txt, smcl, csv, pdf and other formats, used for main and supplementary Tables and Figures. 
 
+Public use data (NHANES and HRS) as well as combined/appended data will be provided in a separate repository linked to the journal. 
+
